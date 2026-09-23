@@ -39,7 +39,7 @@ const StatsCounter = () => {
   return (
     <div
       ref={sectionRef}
-      className="relative overflow-hidden pt-36 lg:pt-44 pb-36 lg:pb-44"
+      className="relative overflow-hidden pt-44 lg:pt-52 pb-36 lg:pb-44"
       style={{
         background: 'linear-gradient(270deg, #0e53ff, #0038c4)',
       }}

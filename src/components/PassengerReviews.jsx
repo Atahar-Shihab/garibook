@@ -1,16 +1,50 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useLayoutEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { passengerReviews } from '../data/index.js';
 
+gsap.registerPlugin(ScrollTrigger);
+
+// Helper function to extract standard 11-character YouTube video ID
 const getYoutubeVideoId = (url) => {
   if (!url) return '';
   const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
   return match ? match[1] : null;
 };
 
+/**
+ * PassengerReviews Component
+ * 
+ * Displays video testimonials from real Garibook passengers.
+ * Features:
+ * 1. Horizontal slider with review cards
+ * 2. Click-to-play popup modal with embedded responsive YouTube iframe
+ * 3. Smooth scroll reveal effect
+ */
 const PassengerReviews = () => {
+  const sectionRef = useRef(null);
   const sliderRef = useRef(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
+  // Smooth scroll reveal animation
+  useLayoutEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from(sliderRef.current, {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Smoothly scrolls the reviews slider
   const scroll = (direction) => {
     if (sliderRef.current) {
       const scrollAmount = 380;
@@ -21,6 +55,7 @@ const PassengerReviews = () => {
     }
   };
 
+  // Open and close video popup modal
   const openVideo = (url) => {
     const videoId = getYoutubeVideoId(url);
     if (videoId) setSelectedVideo(videoId);
@@ -29,9 +64,9 @@ const PassengerReviews = () => {
   const closeVideo = () => setSelectedVideo(null);
 
   return (
-    <section className="bg-[#f8f9fa] py-16 lg:py-24">
+    <section ref={sectionRef} className="bg-[#f8f9fa] py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Header row */}
+        {/* Header Row */}
         <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-12">
           <div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121212] max-w-xl">
@@ -80,6 +115,7 @@ const PassengerReviews = () => {
                   onClick={() => openVideo(review.url)}
                   className="w-[300px] sm:w-[360px] shrink-0 rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
                 >
+                  {/* Video Thumbnail with Red Play Button Overlay */}
                   <div className="relative h-52 w-full overflow-hidden bg-black">
                     <img 
                       src={thumbnailUrl} 
@@ -87,7 +123,7 @@ const PassengerReviews = () => {
                       className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
                     />
                     
-                    {/* Play Button Icon Overlay */}
+                    {/* Play Badge */}
                     <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition">
                       <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
                         <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
@@ -97,6 +133,7 @@ const PassengerReviews = () => {
                     </div>
                   </div>
 
+                  {/* Passenger Name & Occupation */}
                   <div className="p-5">
                     <h4 className="font-bold text-gray-900 text-lg">{review.name}</h4>
                     <p className="text-sm text-gray-500 font-medium mt-1">{review.occupation}</p>
@@ -108,12 +145,13 @@ const PassengerReviews = () => {
         </div>
       </div>
 
-      {/* ── YouTube Video Modal ── */}
+      {/* ─── YouTube Video Modal Overlay ─── */}
       {selectedVideo && (
         <div 
-          className="fixed inset-0 z-[150] bg-black/85 flex items-center justify-center p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[150] bg-black/85 flex items-center justify-center p-4 backdrop-blur-sm animate-fadeIn"
           onClick={closeVideo}
         >
+          {/* Close Modal Button */}
           <button 
             onClick={closeVideo}
             className="absolute top-6 right-6 text-white hover:text-gray-300 p-2 rounded-full focus:outline-none"
@@ -124,6 +162,7 @@ const PassengerReviews = () => {
             </svg>
           </button>
           
+          {/* Responsive 16:9 Iframe Wrapper */}
           <div 
             className="w-full max-w-4xl aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black"
             onClick={(e) => e.stopPropagation()}

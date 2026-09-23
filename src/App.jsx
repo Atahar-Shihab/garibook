@@ -15,7 +15,8 @@ import DownloadApp from './components/DownloadApp';
 import Footer from './components/Footer';
 
 /**
- * Garibook Homepage – Endow Tech Frontend Intern Assessment
+ * Garibook Homepage — Main Application Component
+ * Assembles all 14 sections in the exact visual sequence of the live site.
  */
 export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);

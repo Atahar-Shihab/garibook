@@ -1,6 +1,6 @@
 # Garibook Homepage – React Recreation
 
-> Frontend Intern Technical Assessment – Endow Tech
+> Responsive Frontend Engineering Project & Clean Architecture Showcase
 
 A pixel-fidelity, responsive recreation of the [Garibook](https://garibook.com/) homepage built from scratch with **React 18**, **Tailwind CSS**, and **GSAP** animations.
 
@@ -111,4 +111,4 @@ src/
 
 ## 📄 License
 
-This project is created as a technical assessment submission for Endow Tech.
+This project is created as a frontend technical demonstration. All brand assets belong to Garibook.

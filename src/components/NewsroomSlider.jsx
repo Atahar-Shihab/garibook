@@ -1,9 +1,42 @@
-import React, { useRef } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { newsroomData } from '../data/index.js';
 
+gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * NewsroomSlider Component
+ * 
+ * Displays featured news coverage and press releases about Garibook.
+ * Includes:
+ * 1. Horizontal slider with smooth scrolling
+ * 2. Next & Previous navigation buttons
+ * 3. GSAP scroll animation when sliding down the page
+ */
 const NewsroomSlider = () => {
+  const sectionRef = useRef(null);
   const sliderRef = useRef(null);
 
+  // Smooth entrance animation on scroll
+  useLayoutEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from(sliderRef.current, {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Scrolls the slider horizontally left or right
   const scroll = (direction) => {
     if (sliderRef.current) {
       const scrollAmount = 380;
@@ -15,9 +48,9 @@ const NewsroomSlider = () => {
   };
 
   return (
-    <section className="bg-white py-16 lg:py-24">
+    <section ref={sectionRef} className="bg-white py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Header row */}
+        {/* Header Row with Navigation Arrows */}
         <div className="flex justify-between items-end mb-10">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121212] max-w-xl">
             We Featured by Top news Platforms
@@ -25,26 +58,26 @@ const NewsroomSlider = () => {
           <div className="flex gap-3">
             <button 
               onClick={() => scroll('left')}
-              className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition active:scale-95"
+              className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition active:scale-95 shadow-sm"
               aria-label="Previous News"
             >
               <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button 
               onClick={() => scroll('right')}
-              className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition active:scale-95"
+              className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition active:scale-95 shadow-sm"
               aria-label="Next News"
             >
               <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
         </div>
 
-        {/* Horizontal Slider */}
+        {/* Horizontal Slider List */}
         <div className="overflow-hidden">
           <div 
             ref={sliderRef}
@@ -53,8 +86,9 @@ const NewsroomSlider = () => {
             {newsroomData && newsroomData.map((item) => (
               <div 
                 key={item.id}
-                className="w-[320px] sm:w-[380px] shrink-0 rounded-2xl overflow-hidden border border-gray-100 bg-white shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col"
+                className="w-[320px] sm:w-[380px] shrink-0 rounded-2xl overflow-hidden border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
               >
+                {/* News Article Cover Image */}
                 <div className="h-52 w-full overflow-hidden bg-gray-100">
                   <img 
                     src={item.image} 
@@ -63,6 +97,7 @@ const NewsroomSlider = () => {
                   />
                 </div>
 
+                {/* Article Info */}
                 <div className="p-5 flex flex-col flex-grow">
                   <span className="text-xs text-gray-400 font-medium">
                     {item.date}
@@ -72,6 +107,7 @@ const NewsroomSlider = () => {
                     {item.title}
                   </h3>
 
+                  {/* Brand Logo & Read Article Link */}
                   <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
                     {item.brandImage ? (
                       <img 

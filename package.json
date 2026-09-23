@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Garibook homepage recreation – Endow Tech Frontend Intern Assessment",
+  "description": "Garibook homepage recreation – Modern Responsive React & Tailwind Application",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

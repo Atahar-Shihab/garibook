@@ -115,7 +115,7 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* ─── Mobile Offcanvas Drawer (Slides in from the Left with Royal Blue background) ─── */}
+      {/* ─── Mobile Offcanvas Drawer (Slides in from the Right with Royal Blue background) ─── */}
       <div
         className={`fixed inset-0 bg-black/60 z-[100] transition-opacity duration-300 ${
           drawerOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
@@ -123,63 +123,61 @@ const Navbar = () => {
         onClick={() => setDrawerOpen(false)}
       >
         <div
-          className={`fixed left-0 top-0 bottom-0 w-80 max-w-[85vw] bg-[#0e52ff] text-white shadow-2xl p-6 transition-transform duration-300 transform flex flex-col justify-between overflow-hidden ${
-            drawerOpen ? 'translate-x-0' : '-translate-x-full'
+          className={`fixed right-0 top-0 bottom-0 w-[300px] sm:w-[340px] max-w-[85vw] bg-[#0e52ff] text-white shadow-2xl transition-transform duration-300 transform flex flex-col justify-between overflow-hidden ${
+            drawerOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Top Header inside Drawer: Language Switcher and Close Button */}
-          <div>
-            <div className="flex justify-between items-center pb-6 border-b border-white/20 mb-8">
-              {/* Language Switcher */}
-              <button 
-                onClick={toggleLanguage}
-                className="flex items-center gap-2 text-white font-semibold text-base hover:text-white/80 transition"
+          {/* Top Header inside Drawer: Language Switcher on Left, Close Button on Right */}
+          <div className="flex justify-between items-center px-6 pt-6 pb-2 z-10">
+            {/* Language Switcher */}
+            <button 
+              onClick={toggleLanguage}
+              className="flex items-center gap-2 text-white font-medium text-[16px] hover:opacity-85 transition"
+            >
+              <svg 
+                aria-hidden="true" 
+                focusable="false" 
+                className="w-4 h-4 fill-current" 
+                viewBox="0 0 640 512"
               >
-                <svg 
-                  aria-hidden="true" 
-                  focusable="false" 
-                  className="w-4 h-4 fill-current" 
-                  viewBox="0 0 640 512"
-                >
-                  <path d="M0 128C0 92.7 28.7 64 64 64l192 0 48 0 16 0 256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64l-256 0-16 0-48 0L64 448c-35.3 0-64-28.7-64-64L0 128zm320 0l0 256 256 0 0-256-256 0zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1 .1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1 73.6 0 8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2L179 276l-38 0 19-42.8zM448 164c11 0 20 9 20 20l0 4 44 0 16 0c11 0 20 9 20 20s-9 20-20 20l-2 0-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4c.9 .6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9l-18.9-11.3c-4.5-2.7-8.8-5.5-13.1-8.5c-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8l-12.2-12.2c-7.8-7.8-7.8-20.5 0-28.3s20.5-7.8 28.3 0l14.6 14.6 .5 .5c12.4-13.1 22.5-28.3 29.8-45L448 228l-72 0c-11 0-20-9-20-20s9-20 20-20l52 0 0-4c0-11 9-20 20-20z" />
-                </svg>
-                <span>{language}</span>
-              </button>
+                <path d="M0 128C0 92.7 28.7 64 64 64l192 0 48 0 16 0 256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64l-256 0-16 0-48 0L64 448c-35.3 0-64-28.7-64-64L0 128zm320 0l0 256 256 0 0-256-256 0zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1 .1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1 73.6 0 8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2L179 276l-38 0 19-42.8zM448 164c11 0 20 9 20 20l0 4 44 0 16 0c11 0 20 9 20 20s-9 20-20 20l-2 0-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4c.9 .6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9l-18.9-11.3c-4.5-2.7-8.8-5.5-13.1-8.5c-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8l-12.2-12.2c-7.8-7.8-7.8-20.5 0-28.3s20.5-7.8 28.3 0l14.6 14.6 .5 .5c12.4-13.1 22.5-28.3 29.8-45L448 228l-72 0c-11 0-20-9-20-20s9-20 20-20l52 0 0-4c0-11 9-20 20-20z" />
+              </svg>
+              <span>{language}</span>
+            </button>
 
-              {/* Close (X) Button */}
-              <button 
-                onClick={() => setDrawerOpen(false)} 
-                className="p-1 rounded-full text-white hover:text-white/80 transition focus:outline-none"
-                aria-label="Close Menu"
-              >
-                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Mobile Navigation Links */}
-            <div className="flex flex-col space-y-5">
-              {navLinks?.map((link, index) => (
-                <a
-                  key={index}
-                  href={link.href}
-                  className="text-lg sm:text-xl font-bold transition py-1 text-white/90 hover:text-white"
-                  onClick={() => setDrawerOpen(false)}
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+            {/* Close (X) Button */}
+            <button 
+              onClick={() => setDrawerOpen(false)} 
+              className="p-1 text-white hover:opacity-80 transition focus:outline-none"
+              aria-label="Close Menu"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
 
-          {/* Bottom Illustration Vector */}
-          <div className="pt-6 relative pointer-events-none flex justify-center">
+          {/* Mobile Navigation Links (Center-aligned, medium weight matching Garibook) */}
+          <div className="flex flex-col items-center justify-center space-y-6 pt-6 pb-10 z-10">
+            {navLinks?.map((link, index) => (
+              <a
+                key={index}
+                href={link.href}
+                className="text-white text-[19px] sm:text-[20px] font-medium tracking-tight hover:opacity-80 transition text-center"
+                onClick={() => setDrawerOpen(false)}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Bottom Illustration Vector (Pinned to bottom-right corner) */}
+          <div className="absolute -bottom-4 -right-4 pointer-events-none select-none">
             <img 
               src="/assets/images/logo-vector.png" 
               alt="Garibook Road Illustration" 
-              className="w-full max-w-[260px] object-contain opacity-95" 
+              className="w-[280px] sm:w-[320px] object-contain opacity-95" 
             />
           </div>
         </div>

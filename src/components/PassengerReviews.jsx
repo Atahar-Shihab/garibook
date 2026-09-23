@@ -1,11 +1,7 @@
-import React, { useRef, useState, useLayoutEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useRef, useState } from 'react';
 import { passengerReviews } from '../data/index.js';
 
-gsap.registerPlugin(ScrollTrigger);
-
-// Helper function to extract standard 11-character YouTube video ID
+// I wrote this helper to extract standard 11-character YouTube video IDs from links
 const getYoutubeVideoId = (url) => {
   if (!url) return '';
   const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
@@ -15,36 +11,16 @@ const getYoutubeVideoId = (url) => {
 /**
  * PassengerReviews Component
  * 
- * Displays video testimonials from real Garibook passengers.
- * Features:
- * 1. Horizontal slider with review cards
- * 2. Click-to-play popup modal with embedded responsive YouTube iframe
- * 3. Smooth scroll reveal effect
+ * I created this component to show video testimonials from real passengers:
+ * "Our Passengers Speak For Us"
+ * Includes click-to-play popup modal with responsive 16:9 YouTube iframe,
+ * horizontal sliding controls, and AOS scroll effects.
  */
 const PassengerReviews = () => {
-  const sectionRef = useRef(null);
   const sliderRef = useRef(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
-  // Smooth scroll reveal animation
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.from(sliderRef.current, {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-        }
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  // Smoothly scrolls the reviews slider
+  // Function to smoothly scroll the slider horizontally
   const scroll = (direction) => {
     if (sliderRef.current) {
       const scrollAmount = 380;
@@ -55,7 +31,7 @@ const PassengerReviews = () => {
     }
   };
 
-  // Open and close video popup modal
+  // Open and close video modal
   const openVideo = (url) => {
     const videoId = getYoutubeVideoId(url);
     if (videoId) setSelectedVideo(videoId);
@@ -64,7 +40,7 @@ const PassengerReviews = () => {
   const closeVideo = () => setSelectedVideo(null);
 
   return (
-    <section ref={sectionRef} className="bg-[#f8f9fa] py-16 lg:py-24">
+    <section className="bg-[#f8f9fa] py-16 lg:py-24" data-aos="fade-up" data-aos-delay="50">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header Row */}
         <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-12">
@@ -115,7 +91,7 @@ const PassengerReviews = () => {
                   onClick={() => openVideo(review.url)}
                   className="w-[300px] sm:w-[360px] shrink-0 rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
                 >
-                  {/* Video Thumbnail with Red Play Button Overlay */}
+                  {/* Video Thumbnail with Play Badge */}
                   <div className="relative h-52 w-full overflow-hidden bg-black">
                     <img 
                       src={thumbnailUrl} 
@@ -123,7 +99,6 @@ const PassengerReviews = () => {
                       className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
                     />
                     
-                    {/* Play Badge */}
                     <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition">
                       <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
                         <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">

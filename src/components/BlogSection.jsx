@@ -1,43 +1,19 @@
-import React, { useRef, useLayoutEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
 import { blogsData } from '../data/index.js';
-
-gsap.registerPlugin(ScrollTrigger);
 
 /**
  * BlogSection Component
  * 
- * Displays the latest 3 travel blogs & guides from Garibook.
- * Uses GSAP ScrollTrigger to smoothly stagger cards upward when scrolling down.
+ * I created this blog preview section:
+ * "Beyond Destinations" - "Discover travel hacks, guides, and inspirations..."
+ * Features 3 travel story cards with hover zoom and staggered AOS entrance animations.
  */
 const BlogSection = () => {
-  const sectionRef = useRef(null);
-
-  // Stagger animation: each card glides up one after another as user scrolls
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.from('.blog-card', {
-        y: 40,
-        opacity: 0,
-        stagger: 0.15,
-        duration: 0.7,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-        }
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section ref={sectionRef} className="bg-white py-16 lg:py-24">
+    <section className="bg-white py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4">
         {/* Section Header Row */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12" data-aos="fade-up" data-aos-delay="200">
           <div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121212]">
               Beyond Destinations
@@ -58,41 +34,46 @@ const BlogSection = () => {
           </a>
         </div>
 
-        {/* 3 Blog Cards Grid */}
+        {/* 3 Blog Cards Grid with staggered scroll entrance */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {blogsData.map((blog) => (
-            <div
-              key={blog.id}
-              className="blog-card group rounded-2xl overflow-hidden border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer"
-            >
-              {/* Blog Featured Thumbnail Image */}
-              <div className="h-56 w-full overflow-hidden bg-gray-100">
-                <img
-                  src={blog.image}
-                  alt={blog.title}
-                  className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+          {blogsData.map((blog, index) => {
+            const aosDelay = (index + 1) * 150;
+            return (
+              <div
+                key={blog.id}
+                data-aos="fade-up"
+                data-aos-delay={aosDelay}
+                className="blog-card group rounded-2xl overflow-hidden border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer"
+              >
+                {/* Blog Featured Thumbnail Image */}
+                <div className="h-56 w-full overflow-hidden bg-gray-100">
+                  <img
+                    src={blog.image}
+                    alt={blog.title}
+                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+
+                {/* Blog Text Content */}
+                <div className="p-6 flex flex-col flex-grow">
+                  {/* Publication Date */}
+                  <span className="text-xs text-gray-400 font-medium">
+                    {blog.date}
+                  </span>
+
+                  {/* Article Title */}
+                  <h3 className="text-lg font-bold text-gray-900 mt-2.5 line-clamp-2 leading-snug group-hover:text-[#0e52ff] transition">
+                    {blog.title}
+                  </h3>
+
+                  {/* Category Tag */}
+                  <p className="text-xs text-gray-500 font-medium mt-3">
+                    {blog.category}
+                  </p>
+                </div>
               </div>
-
-              {/* Blog Text Content */}
-              <div className="p-6 flex flex-col flex-grow">
-                {/* Publication Date */}
-                <span className="text-xs text-gray-400 font-medium">
-                  {blog.date}
-                </span>
-
-                {/* Article Title */}
-                <h3 className="text-lg font-bold text-gray-900 mt-2.5 line-clamp-2 leading-snug group-hover:text-[#0e52ff] transition">
-                  {blog.title}
-                </h3>
-
-                {/* Category Tag */}
-                <p className="text-xs text-gray-500 font-medium mt-3">
-                  {blog.category}
-                </p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

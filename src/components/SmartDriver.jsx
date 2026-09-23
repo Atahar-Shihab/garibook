@@ -1,50 +1,32 @@
-import React, { useRef, useLayoutEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
 import { DRIVER_APP_LINK } from '../data/index.js';
-
-gsap.registerPlugin(ScrollTrigger);
 
 /**
  * SmartDriver Component
  * 
- * Promotional section inviting drivers to join Garibook.
- * Uses GSAP ScrollTrigger to smoothly slide up when scrolled into view.
+ * I created this bright banner to recruit drivers:
+ * "Be a Smart Driver" - "0% Commission, 100% Freedom"
+ * Includes the download CTA button for the Smart Driver App, the driver illustration,
+ * and scroll animations matching the live site.
  */
 const SmartDriver = () => {
-  const sectionRef = useRef(null);
-  const cardRef = useRef(null);
-
-  // Smooth scroll-reveal effect when this section enters the screen
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.from(cardRef.current, {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-        }
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section ref={sectionRef} className="bg-white py-16 lg:py-24">
+    <section className="bg-white py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4">
         {/* Section Title */}
-        <h2 className="text-3xl md:text-5xl font-extrabold text-[#121212] mb-10">
+        <h2 
+          className="text-3xl md:text-5xl font-extrabold text-[#121212] mb-10"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
           Be a Smart Driver
         </h2>
         
         {/* Yellow Promo Banner Card */}
         <div 
-          ref={cardRef}
           className="bg-[#fdd300] rounded-3xl overflow-hidden flex flex-col md:flex-row items-center relative shadow-md"
+          data-aos="fade-up"
+          data-aos-delay="200"
         >
           {/* Left Text & CTA Button */}
           <div className="p-8 sm:p-12 lg:p-16 md:w-1/2 w-full flex flex-col items-start z-10">
@@ -66,8 +48,12 @@ const SmartDriver = () => {
             </a>
           </div>
           
-          {/* Right Image: Driver Holding Mobile Phone */}
-          <div className="md:w-1/2 w-full flex justify-center md:justify-end items-end pr-0 md:pr-12 pt-6 md:pt-10">
+          {/* Right Image: Driver Holding Mobile Phone with zoom-in entrance */}
+          <div 
+            className="md:w-1/2 w-full flex justify-center md:justify-end items-end pr-0 md:pr-12 pt-6 md:pt-10"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
             <img 
               src="/assets/images/app-screen/no_commission_app_screen.png" 
               alt="Garibook Smart Driver" 

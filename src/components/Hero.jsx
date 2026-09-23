@@ -1,23 +1,36 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import gsap from 'gsap';
+import React, { useState, useEffect, useRef } from 'react';
 import { heroTypingWords, APP_DOWNLOAD_LINK } from '../data/index.js';
 
+/**
+ * Hero Component
+ * 
+ * I created this hero section at the top of the homepage.
+ * It features:
+ * 1. A dynamic typing and deleting effect cycling through phrases like "Your Journey, Our Priority"
+ * 2. An animated blue cursor (|)
+ * 3. Clear call-to-action button linking to the Garibook mobile app download
+ * 4. Fade-up entrance effects matching the live site
+ */
 const Hero = () => {
+  // I track which phrase in the list is currently being typed
   const [wordIdx, setWordIdx] = useState(0);
+  
+  // I track how many characters of the current phrase are currently visible
   const [charCount, setCharCount] = useState(0);
+  
+  // I track whether the typewriter is in typing mode or backspacing mode
   const [isDeleting, setIsDeleting] = useState(false);
-  const heroRef = useRef(null);
-  const contentRef = useRef(null);
 
   const currentPhrase = heroTypingWords[wordIdx] || '';
 
+  // Typewriter effect logic: types character by character, pauses, deletes, and switches to next phrase
   useEffect(() => {
     let speed = isDeleting ? 30 : 70;
 
     if (!isDeleting && charCount === currentPhrase.length) {
-      speed = 2200; // Pause when complete phrase is shown
+      speed = 2200; // Pause when full sentence is displayed
     } else if (isDeleting && charCount === 0) {
-      speed = 400; // Pause before typing next phrase
+      speed = 400; // Brief pause before typing next sentence
     }
 
     const timer = setTimeout(() => {
@@ -34,33 +47,22 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, [charCount, isDeleting, currentPhrase, wordIdx]);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        contentRef.current.children,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out' }
-      );
-    }, heroRef);
-    return () => ctx.revert();
-  }, []);
-
   const visibleText = currentPhrase.substring(0, charCount);
 
   return (
-    <section ref={heroRef} className="w-full bg-white pt-10 pb-32 lg:pt-14 lg:pb-44">
-      <div className="max-w-7xl mx-auto px-4" ref={contentRef}>
+    <section className="w-full bg-white pt-10 pb-32 lg:pt-14 lg:pb-44">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column: Dynamic Headline */}
-          <div className="lg:col-span-6">
+          {/* Left Column: Dynamic Animated Typing Headline */}
+          <div className="lg:col-span-6" data-aos="fade-up">
             <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-extrabold text-[#121212] tracking-tight leading-[1.12] min-h-[140px] lg:min-h-[160px]">
               <span>{visibleText}</span>
               <span className="inline-block w-1.5 h-[0.9em] bg-[#0e52ff] ml-1.5 align-middle animate-pulse"></span>
             </h1>
           </div>
 
-          {/* Right Column: Subtitle + Download App CTA */}
-          <div className="lg:col-span-6 lg:pl-10">
+          {/* Right Column: Subtitle + Download App Button */}
+          <div className="lg:col-span-6 lg:pl-10" data-aos="fade-up" data-aos-delay="200">
             <p className="text-[#9d9d9d] text-lg sm:text-xl lg:text-[22px] font-medium leading-relaxed max-w-xl">
               Choose your city, pick your car and enjoy the journey with Garibook’s best drivers.
             </p>

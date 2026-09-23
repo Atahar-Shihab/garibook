@@ -1,42 +1,17 @@
-import React, { useRef, useLayoutEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useRef } from 'react';
 import { newsroomData } from '../data/index.js';
-
-gsap.registerPlugin(ScrollTrigger);
 
 /**
  * NewsroomSlider Component
  * 
- * Displays featured news coverage and press releases about Garibook.
- * Includes:
- * 1. Horizontal slider with smooth scrolling
- * 2. Next & Previous navigation buttons
- * 3. GSAP scroll animation when sliding down the page
+ * I created this news slider to display Garibook's media coverage:
+ * "We Featured by Top news Platforms" (Dhaka Tribune, Prothom Alo, Kaler Kantho, etc.)
+ * Includes left/right navigation arrows, horizontal smooth scrolling, and scroll animations.
  */
 const NewsroomSlider = () => {
-  const sectionRef = useRef(null);
   const sliderRef = useRef(null);
 
-  // Smooth entrance animation on scroll
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.from(sliderRef.current, {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-        }
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  // Scrolls the slider horizontally left or right
+  // I use this function to smoothly scroll the articles left or right when clicking the arrows
   const scroll = (direction) => {
     if (sliderRef.current) {
       const scrollAmount = 380;
@@ -48,10 +23,10 @@ const NewsroomSlider = () => {
   };
 
   return (
-    <section ref={sectionRef} className="bg-white py-16 lg:py-24">
+    <section className="bg-white py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header Row with Navigation Arrows */}
-        <div className="flex justify-between items-end mb-10">
+        <div className="flex justify-between items-end mb-10" data-aos="fade-up" data-aos-delay="200">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121212] max-w-xl">
             We Featured by Top news Platforms
           </h2>
@@ -83,55 +58,60 @@ const NewsroomSlider = () => {
             ref={sliderRef}
             className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
           >
-            {newsroomData && newsroomData.map((item) => (
-              <div 
-                key={item.id}
-                className="w-[320px] sm:w-[380px] shrink-0 rounded-2xl overflow-hidden border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
-              >
-                {/* News Article Cover Image */}
-                <div className="h-52 w-full overflow-hidden bg-gray-100">
-                  <img 
-                    src={item.image} 
-                    alt={item.title} 
-                    className="h-full w-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
+            {newsroomData && newsroomData.map((item, index) => {
+              const aosDelay = 100 + (index % 4) * 100;
+              return (
+                <div 
+                  key={item.id}
+                  data-aos="fade-up"
+                  data-aos-delay={aosDelay}
+                  className="w-[320px] sm:w-[380px] shrink-0 rounded-2xl overflow-hidden border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
+                >
+                  {/* News Article Cover Image */}
+                  <div className="h-52 w-full overflow-hidden bg-gray-100">
+                    <img 
+                      src={item.image} 
+                      alt={item.title} 
+                      className="h-full w-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
 
-                {/* Article Info */}
-                <div className="p-5 flex flex-col flex-grow">
-                  <span className="text-xs text-gray-400 font-medium">
-                    {item.date}
-                  </span>
+                  {/* Article Details */}
+                  <div className="p-5 flex flex-col flex-grow">
+                    <span className="text-xs text-gray-400 font-medium">
+                      {item.date}
+                    </span>
 
-                  <h3 className="text-base font-bold text-gray-900 mt-2 line-clamp-2 leading-snug min-h-[44px]">
-                    {item.title}
-                  </h3>
+                    <h3 className="text-base font-bold text-gray-900 mt-2 line-clamp-2 leading-snug min-h-[44px]">
+                      {item.title}
+                    </h3>
 
-                  {/* Brand Logo & Read Article Link */}
-                  <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
-                    {item.brandImage ? (
-                      <img 
-                        src={item.brandImage} 
-                        alt="News Brand" 
-                        className="h-7 max-w-[120px] object-contain object-left"
-                      />
-                    ) : <div />}
+                    {/* Brand Logo & Read Article Link */}
+                    <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                      {item.brandImage ? (
+                        <img 
+                          src={item.brandImage} 
+                          alt="News Brand" 
+                          className="h-7 max-w-[120px] object-contain object-left"
+                        />
+                      ) : <div />}
 
-                    <a 
-                      href={item.url} 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#0e52ff] hover:text-[#0038c4] text-sm font-bold inline-flex items-center gap-1.5 transition"
-                    >
-                      <span>Read Article</span>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </a>
+                      <a 
+                        href={item.url} 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#0e52ff] hover:text-[#0038c4] text-sm font-bold inline-flex items-center gap-1.5 transition"
+                      >
+                        <span>Read Article</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

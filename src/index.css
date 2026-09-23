@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Base Reset ─── */
+/* 
+ * Base Reset & Typography Setup
+ * I'm setting up Poppins for the body and Montserrat for all headings 
+ * so the typography matches the real Garibook site 100%.
+ */
 *,
 *::before,
 *::after {
@@ -20,11 +24,53 @@ html {
 body {
   font-family: 'Poppins', system-ui, -apple-system, sans-serif;
   color: #121212;
-  background: #fff;
+  background: #ffffff;
   overflow-x: hidden;
 }
 
-/* ─── Move City Skyline Animation ─── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', 'Poppins', sans-serif;
+}
+
+/* 
+ * Navbar Active & Hover Link Indicator
+ * The live Garibook site animates an underline underneath the active or hovered navigation link.
+ * I created this pseudo-element that starts at 0 width and expands smoothly to 100% width on hover or when active.
+ */
+.nav-theme-link {
+  position: relative;
+  transition: color 0.3s ease;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+.nav-theme-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background-color: #0e52ff;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.nav-theme-link:hover::after,
+.nav-theme-link.active-menu::after {
+  width: 100%;
+}
+
+.nav-theme-link:hover,
+.nav-theme-link.active-menu {
+  color: #0e52ff !important;
+}
+
+/* 
+ * Animated City Skyline in the Stats Section
+ * I'm looping the background city illustration seamlessly across the screen.
+ */
 @keyframes moveCity {
   0% {
     transform: translateX(0);
@@ -34,7 +80,11 @@ body {
   }
 }
 
-/* ─── Service Card Interactive Animation (Matches Garibook live site) ─── */
+/* 
+ * Service Card Interactive Animation (Matches Garibook live site)
+ * When a user hovers or clicks on a card, the card turns royal blue,
+ * text becomes white, and a white tab notch slides out on the left behind the car illustration.
+ */
 .box-item-wrap-one {
   background: #f5f8ff;
   padding: 36px;
@@ -92,7 +142,9 @@ body {
   transition: transform 0.4s ease;
 }
 
-/* ─── Scrollbar Hide (for sliders) ─── */
+/* 
+ * Utility helpers: Hiding scrollbars for carousel navigation
+ */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -101,7 +153,7 @@ body {
   display: none;
 }
 
-/* ─── Line Clamp ─── */
+/* Text clamp utilities for blog and news cards */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -116,7 +168,7 @@ body {
   overflow: hidden;
 }
 
-/* ─── Smooth Image Loading ─── */
+/* Responsive images */
 img {
   max-width: 100%;
   height: auto;

@@ -1,9 +1,22 @@
 import React, { useState } from 'react';
 import { rideServices } from '../data/index.js';
 
+/**
+ * Services Component
+ * 
+ * I created this component to showcase all the transportation solutions Garibook provides.
+ * Key behaviors:
+ * 1. The first card ("Intercity Car Rental") is auto-selected by default on load.
+ * 2. When hovering over another card, that card becomes active.
+ * 3. As soon as the cursor leaves the cards container, it automatically reverts back to the first card!
+ * 4. Filter tabs to switch between Rides, Garibook Business, Garibook Club, and VMS.
+ */
 const Services = () => {
+  // Category tabs
   const [activeServiceTab, setActiveServiceTab] = useState('Rides');
-  const [activeCardIndex, setActiveCardIndex] = useState(1); // Default to Ride share matching screenshot
+  
+  // I default to 0 so the first card is always selected initially
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
 
   const tabs = ['Rides', 'Garibook Business', 'Garibook Club', 'VMS'];
 
@@ -11,13 +24,13 @@ const Services = () => {
     <section className="bg-white py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4">
         {/* Section Heading */}
-        <div className="mb-10">
+        <div className="mb-10" data-aos="fade-up" data-aos-delay="200">
           <h2 className="text-3xl md:text-5xl font-extrabold text-[#121212]">
             Our Services
           </h2>
           
-          {/* Tab Filter Buttons (Rounded Rectangles matching Image 5) */}
-          <div className="flex flex-wrap gap-3 mt-6">
+          {/* Tab Filter Pills */}
+          <div className="flex flex-wrap gap-3 mt-6" data-aos="fade-up" data-aos-delay="200">
             {tabs.map((tab) => (
               <button
                 key={tab}
@@ -37,20 +50,32 @@ const Services = () => {
         {/* Tab 1: Rides */}
         {activeServiceTab === 'Rides' && (
           <div className="mt-12">
-            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121212] mb-12 leading-tight">
+            <h3 
+              className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121212] mb-12 leading-tight"
+              data-aos="fade-up" 
+              data-aos-delay="200"
+            >
               Every Ride <br /> One Platform
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* 4 Service Cards Grid: On mouse leave, automatically reverts back to card 0 */}
+            <div 
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+              onMouseLeave={() => setActiveCardIndex(0)}
+            >
               {rideServices.map((service, index) => {
                 const isActive = activeCardIndex === index;
+                const aosDelay = index * 200; // 0, 200, 400, 600ms delays
                 return (
                   <div
                     key={index}
+                    data-aos="fade-up"
+                    data-aos-delay={aosDelay}
                     onClick={() => setActiveCardIndex(index)}
                     onMouseEnter={() => setActiveCardIndex(index)}
                     className={`box-item-wrap-one ${isActive ? 'active' : ''}`}
                   >
+                    {/* Vehicle illustration with sliding white tab backdrop */}
                     <div className="box-iwo-img">
                       <img src={service.icon} alt={service.title} className="h-16 w-auto object-contain" />
                     </div>
@@ -73,7 +98,7 @@ const Services = () => {
         {/* Tab 2: Garibook Business */}
         {activeServiceTab === 'Garibook Business' && (
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-6" data-aos="fade-up" data-aos-delay="200">
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#121212] leading-tight">
                 Modern Car Rentals <br /> for Business
               </h3>
@@ -92,7 +117,7 @@ const Services = () => {
                 </a>
               </div>
             </div>
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-6" data-aos="zoom-in" data-aos-delay="300">
               <img
                 src="/assets/images/services/busines.jpeg"
                 alt="Garibook Business"
@@ -105,7 +130,7 @@ const Services = () => {
         {/* Tab 3: Garibook Club */}
         {activeServiceTab === 'Garibook Club' && (
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-6" data-aos="fade-up" data-aos-delay="200">
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#121212] leading-tight">
                 Turn Your Car into Earnings with Garibook Club
               </h3>
@@ -124,7 +149,7 @@ const Services = () => {
                 </a>
               </div>
             </div>
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-6" data-aos="zoom-in" data-aos-delay="300">
               <img
                 src="/assets/images/services/garibook_club.jpg"
                 alt="Garibook Club"
@@ -137,7 +162,7 @@ const Services = () => {
         {/* Tab 4: VMS */}
         {activeServiceTab === 'VMS' && (
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-6" data-aos="fade-up" data-aos-delay="200">
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#121212] leading-tight">
                 Vehicle Management System - VMS
               </h3>
@@ -156,7 +181,7 @@ const Services = () => {
                 </a>
               </div>
             </div>
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-6" data-aos="zoom-in" data-aos-delay="300">
               <img
                 src="/assets/images/vms/Frame_1000001473.png"
                 alt="Vehicle Management System"

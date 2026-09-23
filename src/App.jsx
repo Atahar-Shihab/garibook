@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import BookingWidget from './components/BookingWidget';
@@ -16,11 +19,25 @@ import Footer from './components/Footer';
 
 /**
  * Garibook Homepage — Main Application Component
- * Assembles all 14 sections in the exact visual sequence of the live site.
+ * 
+ * I structured this application into modular, readable components matching the live Garibook site.
+ * Here I initialize AOS (Animate On Scroll) so that every card and banner slides up smoothly
+ * as the user scrolls down the page!
  */
 export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
+  // I initialize AOS when the page mounts to enable the smooth scroll animations
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      easing: 'ease',
+      once: false,
+      offset: 60,
+    });
+  }, []);
+
+  // I track scrolling to toggle the "Scroll to Top" button
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 300);
@@ -30,50 +47,50 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen relative">
-      {/* ── Fixed Navbar ── */}
+    <div className="min-h-screen relative bg-white">
+      {/* ── Fixed Sticky Navbar ── */}
       <Navbar />
 
-      {/* ── Hero Section with Typewriter Effect ── */}
+      {/* ── Hero Section with Animated Typewriter ── */}
       <Hero />
 
-      {/* ── Booking Widget (overlaps Hero ↔ Stats) ── */}
+      {/* ── Interactive Booking Widget ── */}
       <BookingWidget />
 
-      {/* ── Animated Stats Counter ── */}
+      {/* ── Animated Stats Counter with Moving City & Car ── */}
       <StatsCounter />
 
-      {/* ── Our Services (Tabbed) ── */}
+      {/* ── Tabbed Services Section ── */}
       <Services />
 
-      {/* ── Freedom in Every Journey ── */}
+      {/* ── Freedom in Every Journey Dark Section ── */}
       <FreedomSection />
 
       {/* ── More Than Miles – People Together ── */}
       <PeopleTogether />
 
-      {/* ── From Booking to Arrival ── */}
+      {/* ── From Booking to Arrival Bento Grid ── */}
       <BookingArrival />
 
       {/* ── 0% Commission Smart Driver Banner ── */}
       <SmartDriver />
 
-      {/* ── Newsroom / Press Slider ── */}
+      {/* ── Newsroom Press Coverage Slider ── */}
       <NewsroomSlider />
 
       {/* ── Passenger Video Testimonials ── */}
       <PassengerReviews />
 
-      {/* ── Beyond Destinations – Blog Preview ── */}
+      {/* ── Travel Blogs & Guides Preview ── */}
       <BlogSection />
 
-      {/* ── Download Garibook App Banner ── */}
+      {/* ── Download Garibook Mobile App Banner ── */}
       <DownloadApp />
 
-      {/* ── Full Footer ── */}
+      {/* ── Full 4-Tier Footer ── */}
       <Footer />
 
-      {/* ── Floating Actions (Matches Live Site) ── */}
+      {/* ── Floating Action Buttons (Scroll to Top & Support Chat) ── */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 items-end">
         {showScrollTop && (
           <button

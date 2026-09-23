@@ -17,13 +17,6 @@ import BlogSection from './components/BlogSection';
 import DownloadApp from './components/DownloadApp';
 import Footer from './components/Footer';
 
-/**
- * Garibook Homepage — Main Application Component
- * 
- * I structured this application into modular, readable components matching the live Garibook site.
- * Here I initialize AOS (Animate On Scroll) so that every card and banner slides up smoothly
- * as the user scrolls down the page!
- */
 export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -141,7 +134,7 @@ export default function App() {
       
       {/* 2. Floating Support Chat (Blue Circular Button with Chat Bubble Icon) */}
       <button
-        onClick={() => window.open('https://garibook.com', '_blank')}
+        type="button"
         className="fixed bottom-[32px] right-6 sm:right-9 z-50 w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#0e52ff] hover:bg-[#0038c4] text-white flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
         aria-label="Support Chat"
       >

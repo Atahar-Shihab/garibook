@@ -123,7 +123,7 @@ const Navbar = () => {
         onClick={() => setDrawerOpen(false)}
       >
         <div
-          className={`fixed right-0 top-0 bottom-0 w-[300px] sm:w-[340px] max-w-[85vw] bg-[#0e52ff] text-white shadow-2xl transition-transform duration-300 transform flex flex-col justify-between overflow-hidden ${
+          className={`fixed right-0 top-0 bottom-0 w-full bg-[#0e52ff] text-white shadow-2xl transition-transform duration-300 transform flex flex-col overflow-hidden ${
             drawerOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
           onClick={(e) => e.stopPropagation()}
@@ -158,8 +158,8 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* Mobile Navigation Links (Center-aligned, medium weight matching Garibook) */}
-          <div className="flex flex-col items-center justify-center space-y-6 pt-6 pb-10 z-10">
+          {/* Mobile Navigation Links (Centered, positioned right below header) */}
+          <div className="flex flex-col items-center justify-center space-y-6 pt-10 sm:pt-14 z-10">
             {navLinks?.map((link, index) => (
               <a
                 key={index}

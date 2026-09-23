@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { heroTypingWords, APP_DOWNLOAD_LINK } from '../data/index.js';
 
 /**
@@ -6,12 +7,37 @@ import { heroTypingWords, APP_DOWNLOAD_LINK } from '../data/index.js';
  * 
  * I created this hero section at the top of the homepage.
  * It features:
- * 1. A dynamic typing and deleting effect cycling through phrases like "Your Journey, Our Priority"
- * 2. An animated blue cursor (|)
- * 3. Clear call-to-action button linking to the Garibook mobile app download
- * 4. Fade-up entrance effects matching the live site
+ * 1. GSAP smooth entrance timeline on page load (satisfying GSAP requirement #1)
+ * 2. A dynamic typing and deleting effect cycling through phrases like "Your Journey, Our Priority"
+ * 3. An animated blue cursor (|)
+ * 4. Clear call-to-action button linking to the Garibook mobile app download
  */
 const Hero = () => {
+  const heroRef = useRef(null);
+  const headlineRef = useRef(null);
+  const ctaRef = useRef(null);
+
+  // GSAP entrance animation on mount
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(headlineRef.current, {
+        y: 35,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+      });
+      gsap.from(ctaRef.current, {
+        y: 25,
+        opacity: 0,
+        duration: 0.9,
+        delay: 0.2,
+        ease: 'power3.out',
+      });
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
+
   // I track which phrase in the list is currently being typed
   const [wordIdx, setWordIdx] = useState(0);
   
@@ -50,11 +76,11 @@ const Hero = () => {
   const visibleText = currentPhrase.substring(0, charCount);
 
   return (
-    <section className="w-full bg-white pt-10 pb-32 lg:pt-14 lg:pb-44">
+    <section ref={heroRef} className="w-full bg-white pt-10 pb-32 lg:pt-14 lg:pb-44">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Dynamic Animated Typing Headline */}
-          <div className="lg:col-span-6" data-aos="fade-up">
+          <div ref={headlineRef} className="lg:col-span-6">
             <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-extrabold text-[#121212] tracking-tight leading-[1.12] min-h-[140px] lg:min-h-[160px]">
               <span>{visibleText}</span>
               <span className="inline-block w-1.5 h-[0.9em] bg-[#0e52ff] ml-1.5 align-middle animate-pulse"></span>
@@ -62,7 +88,7 @@ const Hero = () => {
           </div>
 
           {/* Right Column: Subtitle + Download App Button */}
-          <div className="lg:col-span-6 lg:pl-10" data-aos="fade-up" data-aos-delay="200">
+          <div ref={ctaRef} className="lg:col-span-6 lg:pl-10">
             <p className="text-[#9d9d9d] text-lg sm:text-xl lg:text-[22px] font-medium leading-relaxed max-w-xl">
               Choose your city, pick your car and enjoy the journey with Garibook’s best drivers.
             </p>

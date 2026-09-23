@@ -1,28 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { navLinks } from '../data/index.js';
 
 /**
  * Navbar Component
  * 
- * I created this component to handle both the desktop header and the mobile navigation drawer.
- * Key features I included:
- * 1. Brand logo leading back to home
- * 2. Desktop navigation links with an animated blue underline effect on hover and active state
- * 3. Language switcher button (English / বাংলা)
+ * I created this component to handle both desktop navigation and the mobile offcanvas menu:
+ * 1. Brand logo leading to homepage
+ * 2. Active link indicator that highlights the current page based on the browser URL
+ *    (On the homepage, no link is active by default; the blue underline expands smoothly on hover)
+ * 3. Language switcher (English / বাংলা)
  * 4. Login button with royal blue styling
- * 5. Mobile slide-in drawer with matching blue background and city road illustration
+ * 5. Slide-in mobile drawer from the left with matching blue theme and road illustration
  */
 const Navbar = () => {
-  // I use this state to track whether the mobile side drawer is open or closed
+  // Mobile drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
   
-  // I use this state to switch between English and Bangla
+  // Language toggle
   const [language, setLanguage] = useState('English');
 
-  // I keep track of the currently active navigation item (defaults to 'About Us' like in the demo)
-  const [activeLink, setActiveLink] = useState('About Us');
+  // I determine the active navigation link based on the current URL path.
+  // On the homepage ('/'), activeLink is empty so "About Us" isn't incorrectly highlighted!
+  const [activeLink, setActiveLink] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname;
+      if (path === '/' || path === '') return '';
+      const found = navLinks.find(link => link.href === path);
+      return found ? found.label : '';
+    }
+    return '';
+  });
 
-  // Function to toggle between English and Bangla
+  // Keep activeLink in sync if the URL changes
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      if (path === '/' || path === '') {
+        setActiveLink('');
+      } else {
+        const found = navLinks.find(link => link.href === path);
+        if (found) setActiveLink(found.label);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === 'English' ? 'বাংলা' : 'English'));
   };
@@ -33,7 +56,11 @@ const Navbar = () => {
       <header className="sticky top-0 w-full z-50 bg-white shadow-sm border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 py-3.5 flex justify-between items-center">
           {/* Garibook Brand Logo */}
-          <a href="/" className="flex items-center">
+          <a 
+            href="/" 
+            onClick={() => setActiveLink('')}
+            className="flex items-center"
+          >
             <img
               src="/assets/images/gaibook-logo.svg"
               alt="Garibook Logo"
@@ -41,7 +68,7 @@ const Navbar = () => {
             />
           </a>
 
-          {/* Desktop Navigation Links with animated underline indicator */}
+          {/* Desktop Navigation Links with animated hover & active underline */}
           <nav className="hidden lg:flex items-center space-x-7">
             {navLinks?.map((link, index) => {
               const isActive = activeLink === link.label;
@@ -50,11 +77,8 @@ const Navbar = () => {
                   key={index}
                   href={link.href}
                   onClick={(e) => {
-                    // Prevent page reload on demo links and mark as active
-                    if (link.href.startsWith('#') || link.href.startsWith('/')) {
-                      e.preventDefault();
-                      setActiveLink(link.label);
-                    }
+                    // Update active state when user clicks on a page
+                    setActiveLink(link.label);
                   }}
                   className={`nav-theme-link font-semibold text-[15px] cursor-pointer ${
                     isActive ? 'active-menu' : 'text-[#121212]'
@@ -66,9 +90,8 @@ const Navbar = () => {
             })}
           </nav>
 
-          {/* Right Action Buttons: Language Toggle & Login */}
+          {/* Right Action Buttons: Language Selector & Login */}
           <div className="hidden lg:flex items-center gap-3">
-            {/* Language Selector Button */}
             <button 
               onClick={toggleLanguage}
               className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-semibold text-sm px-4 py-2 rounded-xl flex items-center gap-2 transition-all shadow-sm active:scale-95"
@@ -79,7 +102,6 @@ const Navbar = () => {
               <span>{language}</span>
             </button>
 
-            {/* Login Button */}
             <a
               href="/login"
               className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-semibold text-sm px-6 py-2 rounded-xl transition-all shadow-sm active:scale-95"

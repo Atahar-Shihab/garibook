@@ -27,13 +27,13 @@ import Footer from './components/Footer';
 export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // I initialize AOS when the page mounts to enable the smooth scroll animations
+  // I initialize AOS with once: true so sections animate in smoothly and stay visible forever
   useEffect(() => {
     AOS.init({
       duration: 800,
       easing: 'ease',
-      once: false,
-      offset: 60,
+      once: true,
+      offset: 40,
     });
   }, []);
 

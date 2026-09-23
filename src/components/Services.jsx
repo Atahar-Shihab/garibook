@@ -62,15 +62,14 @@ const Services = () => {
             <div 
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
               onMouseLeave={() => setActiveCardIndex(0)}
+              data-aos="fade-up"
+              data-aos-delay="200"
             >
               {rideServices.map((service, index) => {
                 const isActive = activeCardIndex === index;
-                const aosDelay = index * 200; // 0, 200, 400, 600ms delays
                 return (
                   <div
                     key={index}
-                    data-aos="fade-up"
-                    data-aos-delay={aosDelay}
                     onClick={() => setActiveCardIndex(index)}
                     onMouseEnter={() => setActiveCardIndex(index)}
                     className={`box-item-wrap-one ${isActive ? 'active' : ''}`}

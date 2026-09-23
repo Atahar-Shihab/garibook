@@ -97,6 +97,7 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  opacity: 1 !important;
 }
 
 .box-item-wrap-one.active,

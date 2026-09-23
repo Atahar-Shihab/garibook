@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { passengerReviews } from '../data/index.js';
 
 // I wrote this helper to extract standard 11-character YouTube video IDs from links
@@ -11,27 +11,77 @@ const getYoutubeVideoId = (url) => {
 /**
  * PassengerReviews Component
  * 
- * I created this component to show video testimonials from real passengers:
+ * I created this component to show video testimonials from real passengers with an infinite looping carousel:
  * "Our Passengers Speak For Us"
- * Includes click-to-play popup modal with responsive 16:9 YouTube iframe,
- * horizontal sliding controls, and AOS scroll effects.
+ * 
+ * Features:
+ * 1. Infinite looping slider on Next/Prev clicks
+ * 2. Click-to-play popup modal with responsive 16:9 YouTube iframe
+ * 3. Responsive card count (3 on desktop, 2 on tablet, 1 on mobile)
+ * 4. Staggered fade-up scroll animations
  */
 const PassengerReviews = () => {
-  const sliderRef = useRef(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [activeBtn, setActiveBtn] = useState('next');
 
-  // Function to smoothly scroll the slider horizontally
-  const scroll = (direction) => {
-    if (sliderRef.current) {
-      const scrollAmount = 380;
-      sliderRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
+  const total = passengerReviews.length;
+  // I duplicate the items 3 times to allow seamless, infinite looping in both directions
+  const extendedData = [...passengerReviews, ...passengerReviews, ...passengerReviews];
+
+  const [currentIndex, setCurrentIndex] = useState(total);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+
+  // Responsive cards per view (3 on desktop, 2 on tablet, 1 on mobile)
+  const [cardsPerView, setCardsPerView] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setCardsPerView(1);
+      } else if (window.innerWidth < 1024) {
+        setCardsPerView(2);
+      } else {
+        setCardsPerView(3);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // When transition ends, seamlessly jump back to the center set if we reached either edge
+  const handleTransitionEnd = () => {
+    if (currentIndex >= total * 2) {
+      setIsTransitioning(false);
+      setCurrentIndex(currentIndex - total);
+    } else if (currentIndex < total) {
+      setIsTransitioning(false);
+      setCurrentIndex(currentIndex + total);
     }
   };
 
-  // Open and close video modal
+  // Re-enable CSS transition after instantaneous boundary jump
+  useEffect(() => {
+    if (!isTransitioning) {
+      const timer = setTimeout(() => {
+        setIsTransitioning(true);
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [isTransitioning]);
+
+  const handleNext = () => {
+    setActiveBtn('next');
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
+  };
+
+  const handlePrev = () => {
+    setActiveBtn('prev');
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev - 1);
+  };
+
   const openVideo = (url) => {
     const videoId = getYoutubeVideoId(url);
     if (videoId) setSelectedVideo(videoId);
@@ -39,8 +89,12 @@ const PassengerReviews = () => {
 
   const closeVideo = () => setSelectedVideo(null);
 
+  // Calculate slide offset percentage
+  const slideWidthPercent = 100 / cardsPerView;
+  const translateX = -(currentIndex * slideWidthPercent);
+
   return (
-    <section className="bg-[#f8f9fa] py-16 lg:py-24" data-aos="fade-up" data-aos-delay="50">
+    <section className="bg-[#f8f9fa] py-16 lg:py-24 overflow-hidden" data-aos="fade-up" data-aos-delay="50">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header Row */}
         <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-12">
@@ -55,63 +109,91 @@ const PassengerReviews = () => {
           
           <div className="flex gap-3 shrink-0">
             <button 
-              onClick={() => scroll('left')}
-              className="w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center hover:bg-gray-100 transition active:scale-95 shadow-sm"
+              onClick={handlePrev}
+              className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-gray-300 flex items-center justify-center transition-all duration-200 active:scale-95 shadow-sm ${
+                activeBtn === 'prev' 
+                  ? 'bg-[#121212] text-white border-[#121212]' 
+                  : 'bg-white text-gray-800 hover:bg-gray-100'
+              }`}
               aria-label="Previous Reviews"
             >
-              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button 
-              onClick={() => scroll('right')}
-              className="w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center hover:bg-gray-100 transition active:scale-95 shadow-sm"
+              onClick={handleNext}
+              className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-gray-300 flex items-center justify-center transition-all duration-200 active:scale-95 shadow-sm ${
+                activeBtn === 'next' 
+                  ? 'bg-[#121212] text-white border-[#121212]' 
+                  : 'bg-white text-gray-800 hover:bg-gray-100'
+              }`}
               aria-label="Next Reviews"
             >
-              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
         </div>
 
-        {/* Video Cards Slider */}
-        <div className="overflow-hidden">
+        {/* ─── Video Cards Looping Slider Track ─── */}
+        <div className="overflow-hidden -mx-3">
           <div 
-            ref={sliderRef}
-            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+            className="flex"
+            style={{
+              transform: `translateX(${translateX}%)`,
+              transition: isTransitioning ? 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)' : 'none',
+            }}
+            onTransitionEnd={handleTransitionEnd}
           >
-            {passengerReviews && passengerReviews.map((review) => {
+            {extendedData.map((review, index) => {
               const videoId = getYoutubeVideoId(review.url);
               const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
               
               return (
                 <div 
-                  key={review.id}
-                  onClick={() => openVideo(review.url)}
-                  className="w-[300px] sm:w-[360px] shrink-0 rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
+                  key={`${review.id}-${index}`}
+                  style={{
+                    flex: `0 0 ${slideWidthPercent}%`,
+                    maxWidth: `${slideWidthPercent}%`,
+                    padding: '0 12px',
+                    boxSizing: 'border-box'
+                  }}
+                  className="shrink-0 flex flex-col"
                 >
-                  {/* Video Thumbnail with Play Badge */}
-                  <div className="relative h-52 w-full overflow-hidden bg-black">
-                    <img 
-                      src={thumbnailUrl} 
-                      alt={`Review by ${review.name}`} 
-                      className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
-                    />
-                    
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition">
-                      <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-                        <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
+                  <div 
+                    onClick={() => openVideo(review.url)}
+                    className="h-full rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col border border-gray-100"
+                  >
+                    {/* Video Thumbnail with Play Badge */}
+                    <div className="relative h-52 w-full overflow-hidden bg-black">
+                      <img 
+                        src={thumbnailUrl} 
+                        alt={`Review by ${review.name}`} 
+                        className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+                      />
+                      
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition">
+                        <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+                          <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Passenger Name & Occupation */}
-                  <div className="p-5">
-                    <h4 className="font-bold text-gray-900 text-lg">{review.name}</h4>
-                    <p className="text-sm text-gray-500 font-medium mt-1">{review.occupation}</p>
+                    {/* Passenger Name & Occupation */}
+                    <div className="p-5 flex flex-col flex-grow justify-between">
+                      <div>
+                        <h4 className="font-bold text-gray-900 text-lg group-hover:text-[#0e52ff] transition">
+                          {review.name}
+                        </h4>
+                        <p className="text-sm text-gray-500 font-medium mt-1">
+                          {review.occupation}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               );

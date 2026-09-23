@@ -73,9 +73,46 @@ export const passengerReviews = [
 /* ─── Data: Newsroom Articles ─── */
 export const newsroomData = [
   { 
+    id: 3, 
+    date: 'December 04, 2024',
+    title: 'বাংলাদেশে প্রথমবার ‘চান্দের গাড়ি’ গাড়িবুক অ্যাপে', 
+    desc: "বাংলাদেশ পর্যটকদের জন্য জনপ্রিয় যানবাহন 'চান্দের গাড়ি' এবার যুক্ত হলো অনলাইন অ্যাপ ভিত্তিক প্ল্যাটফর্মে। গাড়িবুক দেশের প্রথম অ্যাপ হিসেবে পর্যটকদের জন্য এই বিশেষ গাড়ি বুকিং সুবিধা নিয়ে এলো।",
+    url: 'https://www.kalerkantho.com/online/corporatecorner/2024/11/18/1448094', 
+    brandImage: '/admin/assets/images/newsrooms/241204165747_uTQ3MXgeA9.png', 
+    image: '/admin/assets/images/newsrooms/241204165747_E5W7U2wzVE.jpeg' 
+  },
+  { 
+    id: 22, 
+    date: 'January 29, 2025',
+    title: 'গাড়িবুক ও সুস্থীর চুক্তি - স্মার্ট চালক ও পরিবারের জন্য উন্নত স্বাস্থ্যসেবা', 
+    desc: "দেশের শীর্ষস্থানীয় অ্যাপভিত্তিক প্ল্যাটফর্ম গাড়িবুক স্মার্ট চালক ও তাদের পরিবারের উন্নত স্বাস্থ্যসেবা নিশ্চিত করতে ডিজিটাল স্বাস্থ্যসেবা প্ল্যাটফর্ম 'সুস্থী'-এর সাথে একটি গুরুত্বপূর্ণ চুক্তি স্বাক্ষর করেছে। এই উদ্যোগের মাধ্যমে চালকেরা ও তাদের পরিবার সহজেই স্বাস্থ্যসে...",
+    url: 'https://www.kalerkantho.com/online/corporatecorner/2025/01/28/1473908', 
+    brandImage: '/admin/assets/images/newsrooms/250129124339_Rc9J0kthqh.png', 
+    image: '/admin/assets/images/newsrooms/250129124335_Df1YeHs6Nk.png' 
+  },
+  { 
+    id: 27, 
+    date: 'January 29, 2025',
+    title: 'গাড়িচালক ও তাদের পরিবারের স্বাস্থ্যসেবায় গাড়িবুক-সুস্থীর চুক্তি স্বাক্ষর', 
+    desc: "গাড়িবুক দেশের শীর্ষস্থানীয় অ্যাপভিত্তিক প্ল্যাটফর্ম। সম্প্রতি তারা গ্রামীণ ডিজিটাল হেলথকেয়ার সলিউশনসের ডিজিটাল স্বাস্থ্যসেবা প্ল্যাটফর্ম 'সুস্থী'-এর সাথে একটি গুরুত্বপূর্ণ চুক্তি স্বাক্ষর করেছে। যেখানে তারা স্মার্ট চালক ও তাদের পরিবারের জন্য উন্নত...",
+    url: 'https://www.ittefaq.com.bd/717059', 
+    brandImage: '/admin/assets/images/newsrooms/250129133026_67PWO1vFcN.png', 
+    image: '/admin/assets/images/newsrooms/250129133021_UtYCwphRT6.png' 
+  },
+  { 
+    id: 28, 
+    date: 'July 16, 2026',
+    title: 'Replacing ride-hailing commissions with fixed subscriptions', 
+    desc: 'Garibook differentiates itself by eliminating trip commissions and focusing on high-ticket, long-haul intercity routes. This model increases driver retention and enables 10% to 15%...',
+    url: 'https://www.techinasia.com/replacing-ridehailing-commissions-fixed-subscriptions', 
+    brandImage: '/admin/assets/images/newsrooms/260716131358_3Kac7LVxi3.png', 
+    image: '/admin/assets/images/newsrooms/6a5884de4faa5.gif' 
+  },
+  { 
     id: 1, 
     date: 'December 05, 2024',
     title: 'গাড়িবুক: বাংলাদেশের ইন্টারসিটি ভ্রমণে স্বাধীনতার নতুন পথচলা', 
+    desc: "বাংলাদেশ ইন্টারসিটি ভ্রমণ সহজ ও সাশ্রয়ী করার লক্ষ্যে একটি অনন্য উদ্যোগ নিয়ে এসেছে 'গাড়িবুক'। কোনো কমিশন ছাড়াই ইন্টারসিটি কার রেন্টাল পরিষেবা দেওয়া গাড়িবুক দেশের প্রথম এবং একমাত্র অ্যাপ।",
     url: 'https://www.prothomalo.com/bangladesh/9657q54847', 
     brandImage: '/admin/assets/images/newsrooms/241205180904_ZjsiRmDtff.png', 
     image: '/admin/assets/images/newsrooms/241205180904_liOX1GKSQy.webp' 
@@ -84,17 +121,10 @@ export const newsroomData = [
     id: 2, 
     date: 'December 04, 2024',
     title: 'Digital App to offer "Chander Gari"', 
+    desc: 'For the first time in Bangladesh, tourists can now book the iconic Chander Gari through an online platform.',
     url: 'https://epaper.dhakatribune.com/epaper/details/115797', 
     brandImage: '/admin/assets/images/newsrooms/67503526ae3fb.png', 
     image: '/admin/assets/images/newsrooms/67516d3a81863.jpeg' 
-  },
-  { 
-    id: 3, 
-    date: 'December 04, 2024',
-    title: 'বাণিজ্যমেলায় গ্রাহকদের জন্য ‘চান্দের গাড়ি’ সার্ভিসের আয়োজন', 
-    url: 'https://www.kalerkantho.com/online/corporatecorner/2024/11/18/1448094', 
-    brandImage: '/admin/assets/images/newsrooms/241204165747_uTQ3MXgeA9.png', 
-    image: '/admin/assets/images/newsrooms/241204165747_E5W7U2wzVE.jpeg' 
   },
 ];
 

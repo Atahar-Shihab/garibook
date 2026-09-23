@@ -174,3 +174,96 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+/* 
+ * Slide Down Animation for Sticky Navbar
+ * When I scroll down past the hero section, the navbar fixes to the top
+ * and slides down smoothly with a subtle drop shadow.
+ */
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 
+ * Footer Link Hover Underline Animation
+ * Matches the Garibook site where hovering over any footer link draws
+ * a thin white underline from right to left smoothly.
+ */
+.hover-style-link {
+  position: relative;
+  transition: color 0.3s ease;
+  display: inline-block;
+}
+
+.hover-style-link::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  right: 0;
+  width: 0;
+  height: 1px;
+  background-color: #ffffff;
+  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.hover-style-link:hover::after {
+  left: 0;
+  width: 100%;
+  right: auto;
+}
+
+/* 
+ * Smooth Scroll-Triggered Slide-Up Animations (AOS Custom Enhancement)
+ * I crafted these CSS transitions to give that authentic "sliding down to up" feel
+ * when scrolling through the sections and cards on the page.
+ */
+[data-aos="fade-up"] {
+  opacity: 0;
+  transform: translateY(50px);
+  transition-property: transform, opacity;
+  transition-duration: 0.8s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+[data-aos="fade-up"].aos-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-aos="zoom-in"] {
+  opacity: 0;
+  transform: scale(0.92) translateY(30px);
+  transition-property: transform, opacity;
+  transition-duration: 0.8s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+[data-aos="zoom-in"].aos-animate {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+[data-aos="flip-right"] {
+  opacity: 0;
+  transform: perspective(2000px) rotateY(20deg) translateY(20px);
+  transition-property: transform, opacity;
+  transition-duration: 0.8s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+[data-aos="flip-right"].aos-animate {
+  opacity: 1;
+  transform: perspective(2000px) rotateY(0) translateY(0);
+}

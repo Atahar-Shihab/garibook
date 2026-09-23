@@ -19,12 +19,23 @@ const Navbar = () => {
   // Language toggle
   const [language, setLanguage] = useState('English');
 
+  // I track scroll position to trigger sticky navbar slide-down animation
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 80);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // I determine the active navigation link based on the current URL path.
   // On the homepage ('/'), activeLink is empty so "About Us" isn't incorrectly highlighted!
   const [activeLink, setActiveLink] = useState(() => {
     if (typeof window !== 'undefined') {
       const path = window.location.pathname;
-      if (path === '/' || path === '') return '';
+      if (path === '/' || path === '' || path === '/login') return '';
       const found = navLinks.find(link => link.href === path);
       return found ? found.label : '';
     }
@@ -35,7 +46,7 @@ const Navbar = () => {
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname;
-      if (path === '/' || path === '') {
+      if (path === '/' || path === '' || path === '/login') {
         setActiveLink('');
       } else {
         const found = navLinks.find(link => link.href === path);
@@ -52,9 +63,29 @@ const Navbar = () => {
 
   return (
     <>
-      {/* ─── Sticky Desktop Header ─── */}
-      <header className="sticky top-0 w-full z-50 bg-white shadow-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 py-3.5 flex justify-between items-center">
+      {/* ─── Floating Language Toggle on Top Right (Matches Garibook Header) ─── */}
+      <div className="hidden lg:block fixed top-3.5 right-6 xl:right-10 z-[60]">
+        <button 
+          onClick={toggleLanguage}
+          className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-medium text-sm px-3.5 py-1.5 rounded-lg flex items-center gap-2 transition-all shadow-md active:scale-95"
+          aria-label="Toggle Language"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>{language}</span>
+        </button>
+      </div>
+
+      {/* ─── Main Navbar (Slides down smoothly when sticky on scroll) ─── */}
+      <header 
+        className={`w-full transition-all duration-300 ${
+          isSticky 
+            ? 'fixed top-0 left-0 bg-white shadow-md z-50 animate-slide-down py-3' 
+            : 'relative bg-white z-40 mt-7 lg:mt-10 mb-2 py-3'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
           {/* Garibook Brand Logo */}
           <a 
             href="/" 
@@ -68,58 +99,54 @@ const Navbar = () => {
             />
           </a>
 
-          {/* Desktop Navigation Links with animated hover & active underline */}
-          <nav className="hidden lg:flex items-center space-x-7">
-            {navLinks?.map((link, index) => {
-              const isActive = activeLink === link.label;
-              return (
-                <a
-                  key={index}
-                  href={link.href}
-                  onClick={(e) => {
-                    // Update active state when user clicks on a page
-                    setActiveLink(link.label);
-                  }}
-                  className={`nav-theme-link font-semibold text-[15px] cursor-pointer ${
-                    isActive ? 'active-menu' : 'text-[#121212]'
-                  }`}
-                >
-                  {link.label}
-                </a>
-              );
-            })}
-          </nav>
-
-          {/* Right Action Buttons: Language Selector & Login */}
-          <div className="hidden lg:flex items-center gap-3">
-            <button 
-              onClick={toggleLanguage}
-              className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-semibold text-sm px-4 py-2 rounded-xl flex items-center gap-2 transition-all shadow-sm active:scale-95"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{language}</span>
-            </button>
+          {/* Desktop Navigation Links + Login Button grouped together on the Right */}
+          <div className="hidden lg:flex items-center space-x-7">
+            <nav className="flex items-center space-x-7">
+              {navLinks?.map((link, index) => {
+                const isActive = activeLink === link.label;
+                return (
+                  <a
+                    key={index}
+                    href={link.href}
+                    onClick={() => {
+                      setActiveLink(link.label);
+                    }}
+                    className={`nav-theme-link font-semibold text-[15px] cursor-pointer transition-colors ${
+                      isActive ? 'active-menu' : 'text-[#121212]'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
+            </nav>
 
             <a
               href="/login"
-              className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-semibold text-sm px-6 py-2 rounded-xl transition-all shadow-sm active:scale-95"
+              className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-medium text-[15px] px-7 py-2 rounded-lg transition-all shadow-sm active:scale-95 ml-2"
             >
               login
             </a>
           </div>
 
-          {/* Mobile Hamburger Button */}
-          <button
-            className="lg:hidden p-2 text-gray-800 focus:outline-none"
-            onClick={() => setDrawerOpen(true)}
-            aria-label="Open Mobile Menu"
-          >
-            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
+          {/* Mobile Right Controls: Mobile Login + Hamburger */}
+          <div className="lg:hidden flex items-center gap-2">
+            <a
+              href="/login"
+              className="bg-[#0e52ff] text-white text-xs font-semibold px-3 py-1.5 rounded-md"
+            >
+              login
+            </a>
+            <button
+              className="p-1.5 text-gray-800 focus:outline-none"
+              onClick={() => setDrawerOpen(true)}
+              aria-label="Open Mobile Menu"
+            >
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
         </div>
       </header>
 

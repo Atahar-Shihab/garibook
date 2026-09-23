@@ -4,11 +4,11 @@ import { footerLinks, APP_DOWNLOAD_LINK } from '../data/index.js';
 /**
  * Footer Component
  * 
- * I created this 4-tier footer matching the live Garibook site layout:
+ * I created this 4-tier footer to 100% match the live Garibook site:
  * 1. Top 4 columns: garibook, Services, Become Our Partner, Contacts
- * 2. Middle Row: "Download Our Garibook Mobile App" with CTA button on left,
+ * 2. Middle Row: "Download Our Garibook Mobile App" on left,
  *    and "A Product By" (NRB Solution Ltd.) & "Powered By" (Link 3 Technologies) on right
- * 3. Bottom Row: Garibook logo, Terms & Conditions, Privacy Policy, Trade License, Copyright
+ * 3. Bottom Row: Garibook logo, Terms & Conditions, Privacy Policy, Trade License (single line), Copyright
  * 4. Full-Width Payment Banner: Full viewport edge-to-edge SSLCommerz payment options strip at the very bottom
  */
 const Footer = () => {
@@ -23,7 +23,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks?.garibook?.map((link, idx) => (
                 <li key={idx}>
-                  <a href={link.href} className="text-gray-400 hover:text-white transition text-sm">
+                  <a href={link.href} className="hover-style-link text-gray-400 hover:text-white transition text-sm">
                     {link.label}
                   </a>
                 </li>
@@ -37,7 +37,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks?.services?.map((link, idx) => (
                 <li key={idx}>
-                  <a href={link.href} className="text-gray-400 hover:text-white transition text-sm">
+                  <a href={link.href} className="hover-style-link text-gray-400 hover:text-white transition text-sm">
                     {link.label}
                   </a>
                 </li>
@@ -51,7 +51,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks?.partners?.map((link, idx) => (
                 <li key={idx}>
-                  <a href={link.href} className="text-gray-400 hover:text-white transition text-sm">
+                  <a href={link.href} className="hover-style-link text-gray-400 hover:text-white transition text-sm">
                     {link.label}
                   </a>
                 </li>
@@ -71,9 +71,9 @@ const Footer = () => {
         </div>
 
         {/* ─── Tier 2: Middle Section (Download App on Left + Partners on Right) ─── */}
-        <div className="py-8 mb-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="py-10 mb-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           {/* Left: Download Our Garibook Mobile App (Title stacked, button below) */}
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-6 flex flex-col items-start">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
               Download Our <br /> Garibook Mobile App
             </h2>
@@ -93,23 +93,23 @@ const Footer = () => {
           </div>
 
           {/* Right: A Product By & Powered By Partners */}
-          <div className="lg:col-span-6 flex flex-col sm:flex-row justify-start lg:justify-end gap-10 lg:gap-14">
+          <div className="lg:col-span-6 flex flex-col sm:flex-row justify-start lg:justify-end gap-10 lg:gap-14 items-start">
             {/* A Product By NRB Solution Ltd. */}
             <div>
               <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">A Product By</h2>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 mt-3">
                 <img 
                   src="/assets/images/nrb/nrb_no_background.svg" 
                   alt="NRB Solution Ltd." 
-                  className="h-14 w-auto object-contain" 
+                  className="h-12 w-auto object-contain" 
                 />
                 <div>
-                  <h5 className="text-base font-bold text-white">NRB Solution Ltd.</h5>
+                  <h5 className="text-sm sm:text-base font-bold text-white">NRB Solution Ltd.</h5>
                   <a 
                     href="https://nrb-solutions.net/" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="text-sm text-[#fdd300] hover:underline font-bold inline-flex items-center gap-1 mt-1"
+                    className="text-xs sm:text-sm text-[#fdd300] hover:underline font-bold inline-flex items-center gap-1 mt-0.5"
                   >
                     <span>Visit Website</span> &rarr;
                   </a>
@@ -120,19 +120,19 @@ const Footer = () => {
             {/* Powered By Link 3 Technologies */}
             <div>
               <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">Powered By</h2>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 mt-3">
                 <img 
                   src="/assets/images/clients/link3-two.png" 
                   alt="Link 3 Technologies" 
-                  className="h-14 w-auto object-contain" 
+                  className="h-12 w-auto object-contain" 
                 />
                 <div>
-                  <h5 className="text-base font-bold text-white">Link 3 Technologies</h5>
+                  <h5 className="text-sm sm:text-base font-bold text-white">Link 3 Technologies</h5>
                   <a 
                     href="https://link3.net" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="text-sm text-[#fdd300] hover:underline font-bold inline-flex items-center gap-1 mt-1"
+                    className="text-xs sm:text-sm text-[#fdd300] hover:underline font-bold inline-flex items-center gap-1 mt-0.5"
                   >
                     <span>Visit Website</span> &rarr;
                   </a>
@@ -142,29 +142,34 @@ const Footer = () => {
           </div>
         </div>
 
-        <hr className="border-gray-800" />
+        {/* Subtle separator line */}
+        <div className="border-t border-[#222] my-8" />
 
         {/* ─── Tier 3: Brand Logo, Legal Links & Trade License ─── */}
-        <div className="py-6 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-gray-400">
-          <div className="flex items-center gap-8 flex-wrap justify-center">
-            <img src="/assets/images/Garibook_Logo.svg" alt="Garibook" className="h-9 object-contain" />
-            <a href="/terms" className="hover:text-white transition">Terms & Conditions</a>
-            <a href="/privacy" className="hover:text-white transition">Privacy Policy</a>
+        <div className="pb-8 flex flex-col lg:flex-row justify-between items-center gap-6 text-sm text-gray-400">
+          <div className="flex items-center gap-6 sm:gap-8 flex-wrap justify-center lg:justify-start">
+            <img src="/assets/images/Garibook_Logo.svg" alt="Garibook" className="h-8 object-contain" />
+            <a href="/terms-and-conditions" className="hover-style-link text-gray-400 hover:text-white transition">Terms &amp; Conditions</a>
+            <a href="/privacy-policy" className="hover-style-link text-gray-400 hover:text-white transition">Privacy Policy</a>
           </div>
 
-          <div className="flex items-center gap-8 flex-wrap justify-center text-center md:text-right">
-            <span>Trade license number: <br className="sm:hidden" /> TRAD/DNCC/013806/2024</span>
-            <span>&copy; 2026 Garibook.com</span>
+          <div className="flex items-center gap-6 sm:gap-10 flex-wrap justify-center lg:justify-end text-sm">
+            <div className="text-center lg:text-left leading-tight">
+              <span>Trade license number: <br /> TRAD/DNCC/013806/2024</span>
+            </div>
+            <div className="text-center lg:text-left">
+              <span>&copy; 2026 Garibook.com</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* ─── Tier 4: Edge-to-Edge Full-Width SSLCommerz Payment Gateway Strip ─── */}
-      <div className="w-full bg-white py-2 px-4 flex items-center justify-center overflow-x-auto shadow-sm mt-2">
+      <div className="w-full bg-white py-1.5 px-2 flex items-center justify-center overflow-hidden">
         <img 
           src="/assets/images/clients/ssl.png" 
           alt="Payment Methods: Visa, Mastercard, Amex, bKash, Nagad, Rocket, Upay, SSLCommerz" 
-          className="w-full max-w-full h-auto object-contain" 
+          className="w-full h-auto object-cover max-h-[46px]" 
         />
       </div>
     </footer>

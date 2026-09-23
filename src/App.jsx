@@ -27,20 +27,55 @@ import Footer from './components/Footer';
 export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // I initialize AOS with once: true so sections animate in smoothly and stay visible forever
+  // I initialize AOS and also use an IntersectionObserver to make sure
+  // every element slides up smoothly from bottom to top as the user scrolls down!
   useEffect(() => {
     AOS.init({
       duration: 800,
-      easing: 'ease',
-      once: true,
-      offset: 40,
+      easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+      once: false,
+      mirror: false,
+      offset: 50,
     });
+
+    // Refresh AOS once all images and elements finish rendering
+    const handleLoad = () => AOS.refresh();
+    window.addEventListener('load', handleLoad);
+
+    // Custom IntersectionObserver ensuring slide-up effects trigger 100% reliably
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('aos-animate');
+          } else {
+            // When scrolling back up above the element, reset so it re-slides on the next scroll down
+            const rect = entry.boundingClientRect;
+            if (rect.top > window.innerHeight) {
+              entry.target.classList.remove('aos-animate');
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px',
+      }
+    );
+
+    const animatedElements = document.querySelectorAll('[data-aos]');
+    animatedElements.forEach((el) => observer.observe(el));
+
+    return () => {
+      window.removeEventListener('load', handleLoad);
+      observer.disconnect();
+    };
   }, []);
 
   // I track scrolling to toggle the "Scroll to Top" button
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 300);
+      setShowScrollTop(window.scrollY > 200);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -90,29 +125,30 @@ export default function App() {
       {/* ── Full 4-Tier Footer ── */}
       <Footer />
 
-      {/* ── Floating Action Buttons (Scroll to Top & Support Chat) ── */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 items-end">
-        {showScrollTop && (
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="w-10 h-10 rounded-lg bg-[#0e52ff] hover:bg-[#0038c4] text-white flex items-center justify-center shadow-lg transition active:scale-95"
-            aria-label="Scroll to top"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
-          </button>
-        )}
-        
+      {/* ── Floating Action Buttons (Positioned to match Garibook live site) ── */}
+      {/* 1. Scroll to Top (Blue Square Button with White Up Arrow) */}
+      {showScrollTop && (
         <button
-          className="w-12 h-12 rounded-full bg-[#0e52ff] hover:bg-[#0038c4] text-white flex items-center justify-center shadow-xl transition active:scale-95"
-          aria-label="Support Chat"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-[97px] right-6 sm:right-9 z-50 w-11 h-11 rounded-lg bg-[#0e52ff] hover:bg-[#0038c4] text-white flex items-center justify-center shadow-lg transition-all duration-300 active:scale-95"
+          aria-label="Scroll to top"
         >
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.8} d="M5 10l7-7m0 0l7 7m-7-7v18" />
           </svg>
         </button>
-      </div>
+      )}
+      
+      {/* 2. Floating Support Chat (Blue Circular Button with Chat Bubble Icon) */}
+      <button
+        onClick={() => window.open('https://garibook.com', '_blank')}
+        className="fixed bottom-[32px] right-6 sm:right-9 z-50 w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#0e52ff] hover:bg-[#0038c4] text-white flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
+        aria-label="Support Chat"
+      >
+        <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+        </svg>
+      </button>
     </div>
   );
 }

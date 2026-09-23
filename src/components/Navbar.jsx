@@ -36,32 +36,32 @@ const Navbar = () => {
 
   return (
     <>
-      {/* ─── Top Utility Bar with Floating Language Switch (Visible only at top of page) ─── */}
-      {!isSticky && (
-        <div className="hidden lg:block w-full pt-3 pb-1 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-end">
-            <button 
-              onClick={toggleLanguage}
-              className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-medium text-sm px-4 py-1.5 rounded-lg flex items-center gap-2 transition-all shadow-sm active:scale-95"
-              aria-label="Toggle Language"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{language}</span>
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* ─── Main Navbar (Slides down smoothly when sticky on scroll) ─── */}
       <header 
         className={`w-full transition-all duration-300 ${
           isSticky 
-            ? 'fixed top-0 left-0 bg-white shadow-md z-50 animate-slide-down py-3.5' 
-            : 'relative bg-white z-40 py-3'
+            ? 'fixed top-0 left-0 bg-white shadow-md z-50 animate-slide-down py-3' 
+            : 'relative bg-white z-40 pt-3 pb-3 md:pt-4 md:pb-3'
         }`}
       >
+        {/* Authentic Language Toggle Button pinned to the top-right corner of the page */}
+        <div className="hidden lg:block absolute top-2 right-4 lg:right-6 xl:right-8 z-50">
+          <button 
+            onClick={toggleLanguage}
+            className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-medium text-[13px] px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 transition-all shadow-sm active:scale-95"
+            aria-label="Toggle Language"
+          >
+            <svg 
+              aria-hidden="true" 
+              focusable="false" 
+              className="w-3.5 h-3.5 fill-current" 
+              viewBox="0 0 640 512"
+            >
+              <path d="M0 128C0 92.7 28.7 64 64 64l192 0 48 0 16 0 256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64l-256 0-16 0-48 0L64 448c-35.3 0-64-28.7-64-64L0 128zm320 0l0 256 256 0 0-256-256 0zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1 .1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1 73.6 0 8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2L179 276l-38 0 19-42.8zM448 164c11 0 20 9 20 20l0 4 44 0 16 0c11 0 20 9 20 20s-9 20-20 20l-2 0-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4c.9 .6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9l-18.9-11.3c-4.5-2.7-8.8-5.5-13.1-8.5c-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8l-12.2-12.2c-7.8-7.8-7.8-20.5 0-28.3s20.5-7.8 28.3 0l14.6 14.6 .5 .5c12.4-13.1 22.5-28.3 29.8-45L448 228l-72 0c-11 0-20-9-20-20s9-20 20-20l52 0 0-4c0-11 9-20 20-20z" />
+            </svg>
+            <span>{language}</span>
+          </button>
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
           {/* Garibook Brand Logo */}
           <a href="/" className="flex items-center">
@@ -136,8 +136,13 @@ const Navbar = () => {
                 onClick={toggleLanguage}
                 className="flex items-center gap-2 text-white font-semibold text-base hover:text-white/80 transition"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg 
+                  aria-hidden="true" 
+                  focusable="false" 
+                  className="w-4 h-4 fill-current" 
+                  viewBox="0 0 640 512"
+                >
+                  <path d="M0 128C0 92.7 28.7 64 64 64l192 0 48 0 16 0 256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64l-256 0-16 0-48 0L64 448c-35.3 0-64-28.7-64-64L0 128zm320 0l0 256 256 0 0-256-256 0zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1 .1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1 73.6 0 8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2L179 276l-38 0 19-42.8zM448 164c11 0 20 9 20 20l0 4 44 0 16 0c11 0 20 9 20 20s-9 20-20 20l-2 0-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4c.9 .6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9l-18.9-11.3c-4.5-2.7-8.8-5.5-13.1-8.5c-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8l-12.2-12.2c-7.8-7.8-7.8-20.5 0-28.3s20.5-7.8 28.3 0l14.6 14.6 .5 .5c12.4-13.1 22.5-28.3 29.8-45L448 228l-72 0c-11 0-20-9-20-20s9-20 20-20l52 0 0-4c0-11 9-20 20-20z" />
                 </svg>
                 <span>{language}</span>
               </button>

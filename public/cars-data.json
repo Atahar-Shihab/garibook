@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "car_name": "Sedan Premium",
+    "seat": "4 Seats",
+    "image": "admin/assets/images/car_configuration/1car_configuration1790064590387752.png",
+    "status": 1,
+    "division": null,
+    "created_at": "2024-01-09T01:53:10.000Z",
+    "updated_at": "2024-02-05T07:10:24.000Z",
+    "updated_by": null
+  },
+  {
+    "id": 2,
+    "car_name": "Sedan",
+    "seat": "4 Seats",
+    "image": "admin/assets/images/car_configuration/1car_configuration1790064556396506.png",
+    "status": 1,
+    "division": null,
+    "created_at": "2024-01-13T23:48:09.000Z",
+    "updated_at": "2024-02-05T07:09:52.000Z",
+    "updated_by": null
+  },
+  {
+    "id": 3,
+    "car_name": "Noah",
+    "seat": "7 Seats",
+    "image": "admin/assets/images/car_configuration/1car_configuration1790064571661334.png",
+    "status": 1,
+    "division": null,
+    "created_at": "2024-01-09T01:53:56.000Z",
+    "updated_at": "2024-02-05T07:10:06.000Z",
+    "updated_by": null
+  },
+  {
+    "id": 5,
+    "car_name": "HiAce",
+    "seat": "11 Seats",
+    "image": "admin/assets/images/car_configuration/1car_configuration1790064527400306.png",
+    "status": 1,
+    "division": null,
+    "created_at": "2024-01-14T00:06:17.000Z",
+    "updated_at": "2024-02-05T07:09:24.000Z",
+    "updated_by": null
+  },
+  {
+    "id": 7,
+    "car_name": "Sedan Economy",
+    "seat": "4 Seats",
+    "image": "admin/assets/images/car_configuration/probox.png",
+    "status": 1,
+    "division": null,
+    "created_at": "2024-05-01T07:17:18.000Z",
+    "updated_at": "2024-05-11T05:24:53.000Z",
+    "updated_by": null
+  },
+  {
+    "id": 11,
+    "car_name": "Chander Gari",
+    "seat": "8 Seats",
+    "image": "admin/assets/images/car_configuration/chander_gari.png",
+    "status": 1,
+    "division": null,
+    "created_at": "2024-10-07T11:35:25.000Z",
+    "updated_at": "2025-08-23T05:50:38.000Z",
+    "updated_by": null
+  }
+]

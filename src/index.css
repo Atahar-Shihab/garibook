@@ -57,13 +57,11 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-.nav-theme-link:hover::after,
-.nav-theme-link.active-menu::after {
+.nav-theme-link:hover::after {
   width: 100%;
 }
 
-.nav-theme-link:hover,
-.nav-theme-link.active-menu {
+.nav-theme-link:hover {
   color: #0e52ff !important;
 }
 

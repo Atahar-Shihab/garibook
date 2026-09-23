@@ -30,68 +30,41 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // I determine the active navigation link based on the current URL path.
-  // On the homepage ('/'), activeLink is empty so "About Us" isn't incorrectly highlighted!
-  const [activeLink, setActiveLink] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const path = window.location.pathname;
-      if (path === '/' || path === '' || path === '/login') return '';
-      const found = navLinks.find(link => link.href === path);
-      return found ? found.label : '';
-    }
-    return '';
-  });
-
-  // Keep activeLink in sync if the URL changes
-  useEffect(() => {
-    const handlePopState = () => {
-      const path = window.location.pathname;
-      if (path === '/' || path === '' || path === '/login') {
-        setActiveLink('');
-      } else {
-        const found = navLinks.find(link => link.href === path);
-        if (found) setActiveLink(found.label);
-      }
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === 'English' ? 'বাংলা' : 'English'));
   };
 
   return (
     <>
-      {/* ─── Floating Language Toggle on Top Right (Matches Garibook Header) ─── */}
-      <div className="hidden lg:block fixed top-3.5 right-6 xl:right-10 z-[60]">
-        <button 
-          onClick={toggleLanguage}
-          className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-medium text-sm px-3.5 py-1.5 rounded-lg flex items-center gap-2 transition-all shadow-md active:scale-95"
-          aria-label="Toggle Language"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span>{language}</span>
-        </button>
-      </div>
+      {/* ─── Top Utility Bar with Floating Language Switch (Visible only at top of page) ─── */}
+      {!isSticky && (
+        <div className="hidden lg:block w-full pt-3 pb-1 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-end">
+            <button 
+              onClick={toggleLanguage}
+              className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-medium text-sm px-4 py-1.5 rounded-lg flex items-center gap-2 transition-all shadow-sm active:scale-95"
+              aria-label="Toggle Language"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{language}</span>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ─── Main Navbar (Slides down smoothly when sticky on scroll) ─── */}
       <header 
         className={`w-full transition-all duration-300 ${
           isSticky 
-            ? 'fixed top-0 left-0 bg-white shadow-md z-50 animate-slide-down py-3' 
-            : 'relative bg-white z-40 mt-7 lg:mt-10 mb-2 py-3'
+            ? 'fixed top-0 left-0 bg-white shadow-md z-50 animate-slide-down py-3.5' 
+            : 'relative bg-white z-40 py-3'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
           {/* Garibook Brand Logo */}
-          <a 
-            href="/" 
-            onClick={() => setActiveLink('')}
-            className="flex items-center"
-          >
+          <a href="/" className="flex items-center">
             <img
               src="/assets/images/gaibook-logo.svg"
               alt="Garibook Logo"
@@ -102,23 +75,15 @@ const Navbar = () => {
           {/* Desktop Navigation Links + Login Button grouped together on the Right */}
           <div className="hidden lg:flex items-center space-x-7">
             <nav className="flex items-center space-x-7">
-              {navLinks?.map((link, index) => {
-                const isActive = activeLink === link.label;
-                return (
-                  <a
-                    key={index}
-                    href={link.href}
-                    onClick={() => {
-                      setActiveLink(link.label);
-                    }}
-                    className={`nav-theme-link font-semibold text-[15px] cursor-pointer transition-colors ${
-                      isActive ? 'active-menu' : 'text-[#121212]'
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                );
-              })}
+              {navLinks?.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.href}
+                  className="nav-theme-link font-semibold text-[15px] cursor-pointer text-[#121212]"
+                >
+                  {link.label}
+                </a>
+              ))}
             </nav>
 
             <a
@@ -191,24 +156,16 @@ const Navbar = () => {
 
             {/* Mobile Navigation Links */}
             <div className="flex flex-col space-y-5">
-              {navLinks?.map((link, index) => {
-                const isActive = activeLink === link.label;
-                return (
-                  <a
-                    key={index}
-                    href={link.href}
-                    className={`text-lg sm:text-xl font-bold transition py-1 ${
-                      isActive ? 'text-white border-b-2 border-white inline-block w-fit' : 'text-white/90 hover:text-white'
-                    }`}
-                    onClick={() => {
-                      setActiveLink(link.label);
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    {link.label}
-                  </a>
-                );
-              })}
+              {navLinks?.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.href}
+                  className="text-lg sm:text-xl font-bold transition py-1 text-white/90 hover:text-white"
+                  onClick={() => setDrawerOpen(false)}
+                >
+                  {link.label}
+                </a>
+              ))}
             </div>
           </div>
 

@@ -1,114 +1,145 @@
-# Garibook Homepage – React Recreation
+# Garibook Landing Page – Frontend Technical Assessment Recreation
 
-> Responsive Frontend Engineering Project & Clean Architecture Showcase
+> **Live Demo:** [https://garibook.vercel.app/](https://garibook.vercel.app/)  
+> **Original Reference Website:** [https://garibook.com/](https://garibook.com/)  
+> **Author:** Atahar Shihab ([GitHub](https://github.com/Atahar-Shihab) • [Email](mailto:shihabatahar@gmail.com))
 
-A pixel-fidelity, responsive recreation of the [Garibook](https://garibook.com/) homepage built from scratch with **React 18**, **Tailwind CSS**, and **GSAP** animations.
-
-![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=white)
-![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?logo=tailwindcss&logoColor=white)
-![GSAP](https://img.shields.io/badge/GSAP-3.12-88CE02?logo=greensock&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?logo=vite&logoColor=white)
+A high-fidelity, pixel-accurate, and responsive recreation of the official **Garibook** homepage built from scratch with **React 18**, **Tailwind CSS**, **Vite**, and smooth **GSAP / AOS** animations.
 
 ---
 
-## 🚀 Quick Start
+## ⚖️ Disclaimer & Attribution (Important)
 
-```bash
-# Clone the repository
-git clone <your-repo-url>
-cd garibook-homepage
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Production build
-npm run build
-
-# Preview production build
-npm run preview
-```
-
-The dev server starts at **http://localhost:3000**.
+> [!NOTE]
+> **Educational & Evaluation Purpose Only:**  
+> This project is developed exclusively as a **frontend engineering demonstration and technical skills assessment**. It is **not** affiliated with, endorsed by, or operated as an official service of Garibook or NRB Solution Ltd.
+> 
+> - **Intellectual Property:** All brand names, logos, vehicle photographs, press article headlines, and registered trademarks belong entirely to **Garibook** ([garibook.com](https://garibook.com/)) and its respective partners.
+> - **Non-Commercial:** This codebase and its live deployment are strictly non-commercial and hosted solely for technical code review and portfolio evaluation purposes.
 
 ---
 
-## 🏗️ Tech Stack & Rationale
+## 🚀 Key Highlights & Implemented Features
 
-| Technology | Why |
+### 1. 🚖 Interactive Hero Booking Engine
+- **Multi-Tab Mode**: Seamlessly toggle between **Car Rental**, **Airport Rental**, and **Hourly Rental**.
+- **Dynamic Trip Configurator**: Toggle between **One Way** and **Round Trip**, dynamically revealing the return date/time selectors.
+- **Auto-Selected Fleet Browser**: Interactive vehicle cards featuring real Garibook fleet models (Sedan, Noah, HiAce, Alphard) with auto-selection on first load, hover previews, and seat/luggage specifications.
+- **Date & Time Controls**: Integrated date and time pickers matching Garibook's layout.
+
+### 2. 🧭 Pixel-Accurate Navigation & Header
+- **Floating Language Switcher**: `[ 🌐 English ]` toggle bar placed cleanly above the navbar.
+- **Smooth Underline Hover Effect**: Dynamic blue underline indicator (`.nav-theme-link`) that smoothly animates on mouse hover and never sticks to arbitrary menu items.
+- **Scroll-Aware Sticky Header**: Automatically transitions to a sticky, elevated shadow navigation bar when scrolling past 80px.
+- **Responsive Mobile Drawer**: Off-canvas menu with branded royal blue background and smooth slide-in animations.
+
+### 3. 📰 Infinite Looping Newsroom Slider
+- Continuous looping carousel cycling through authentic Garibook press publications (Kaler Kantho, Ittefaq, Tech in Asia with live GIF, Prothom Alo, Dhaka Tribune).
+- Dual-layer infinite loop logic with smooth boundary jumping and responsive card layout.
+- Active navigation arrows with dark hover states.
+
+### 4. 🎥 Authentic Video Testimonials
+- Video testimonial slider featuring authentic passenger reviews.
+- Interactive modal overlay to play YouTube interviews directly without page reloads.
+
+### 5. 🦶 Full Corporate Footer
+- 4-column navigational layout with dynamic hover underlines.
+- App store download links (Google Play & Apple App Store).
+- Legal and corporate credentials: NRB Solution Ltd., Link 3 Technologies, and Trade License information.
+- Full-width SSLCommerz payment partner banner.
+
+### 6. 📱 Floating Action Controls
+- **Scroll to Top**: Smooth upward scroll button positioned at bottom-right.
+- **Live Support Chat**: Fixed floating chat launcher icon.
+
+---
+
+## 🛠️ Tech Stack & Architecture
+
+| Technology | Purpose |
 |---|---|
-| **React 18** | Industry standard, required by the assessment. Functional components with hooks for clean state management. |
-| **Vite** | Lightning-fast HMR and builds (~1.2s). No webpack configuration overhead. |
-| **Tailwind CSS 3** | Utility-first styling that matches the original Bootstrap-based Garibook layout while being more composable and responsive. |
-| **GSAP + ScrollTrigger** | Professional-grade animation library for the hero entrance timeline, scroll-triggered counter animations, and section reveal effects. |
-| **Zero UI libraries** | No Bootstrap, no Material UI, no pre-built component libraries — everything is hand-crafted to demonstrate frontend competency. |
+| **React 18** | Modular component-driven architecture with clean custom hooks |
+| **Vite** | Blazing-fast development environment and optimized production bundling (~1.3s build) |
+| **Tailwind CSS 3** | Highly customized utility-first styling reproducing Garibook's design system |
+| **GSAP & AOS** | Fluid viewport entrance animations and scroll reveal effects |
+| **Vanilla Architecture** | Hand-crafted UI components without relying on heavy external UI frameworks |
 
 ---
 
-## 📁 Project Structure
+## 📁 Repository Structure
 
 ```
-src/
-├── main.jsx                    # React entry point
-├── App.jsx                     # Root component – section orchestrator
-├── index.css                   # Global styles, animations, Tailwind directives
-├── data/
-│   └── index.js                # Static data (cars, airports, stats, reviews)
-└── components/
-    ├── Navbar.jsx              # Sticky header + mobile offcanvas drawer
-    ├── Hero.jsx                # Hero with GSAP entrance + typewriter effect
-    ├── BookingWidget.jsx       # Car Rental & Airport Rental tabbed form
-    ├── StatsCounter.jsx        # GSAP scroll-triggered animated counters
-    ├── Services.jsx            # Tabbed services (Rides/Business/Club/VMS)
-    ├── FreedomSection.jsx      # "Freedom in Every Journey" feature cards
-    ├── PeopleTogether.jsx      # Image cards (Airport/Family/Tours)
-    ├── BookingArrival.jsx      # "From Booking to Arrival" image grid
-    ├── SmartDriver.jsx         # 0% Commission driver CTA banner
-    ├── NewsroomSlider.jsx      # Press/newsroom horizontal slider
-    ├── PassengerReviews.jsx    # Video testimonials + YouTube modal
-    ├── BlogSection.jsx         # Blog preview cards
-    ├── DownloadApp.jsx         # App download promotional banner
-    └── Footer.jsx              # Full corporate footer
+d:/Garibook/
+├── public/
+│   ├── assets/images/          # Authentic brand assets, fleet pictures & logos
+│   ├── blogs.json              # Garibook blog articles data
+│   ├── newsrooms.json          # Live press coverage data
+│   ├── favicon.ico             # Official circular pin favicon
+│   └── favicon.svg             # Vector brand tab icon
+├── src/
+│   ├── components/
+│   │   ├── Navbar.jsx          # Header, navigation & mobile drawer
+│   │   ├── Hero.jsx            # Hero banner & headline animations
+│   │   ├── BookingWidget.jsx   # Multi-tab ride booking configurator
+│   │   ├── StatsCounter.jsx    # Animated metrics counter
+│   │   ├── Services.jsx        # Service tiers & feature highlights
+│   │   ├── FreedomSection.jsx  # Travel freedom promotional cards
+│   │   ├── PeopleTogether.jsx  # Community & corporate travel showcase
+│   │   ├── BookingArrival.jsx  # Process & ride guarantee guide
+│   │   ├── SmartDriver.jsx     # Driver onboarding CTA section
+│   │   ├── NewsroomSlider.jsx  # Infinite auto-looping press slider
+│   │   ├── PassengerReviews.jsx# Video testimonial carousel & modal
+│   │   ├── BlogSection.jsx     # Travel blogs & tips grid
+│   │   ├── DownloadApp.jsx     # Mobile app download section
+│   │   └── Footer.jsx          # Corporate footer with SSLCommerz bar
+│   ├── data/
+│   │   └── index.js            # Structured fleet data, navigation links & metadata
+│   ├── App.jsx                 # Page composition & scroll observers
+│   ├── main.jsx                # Application root mount
+│   └── index.css               # Tailwind directives & custom CSS animations
+├── index.html                  # HTML entry point with official SEO metadata
+├── package.json
+└── README.md
 ```
 
 ---
 
-## ✨ Key Features & GSAP Animations
+## 💻 Local Development Setup
 
-### 🎬 Hero Typewriter Effect
-- Custom character-by-character typing animation that cycles through 3 headlines
-- HTML-aware rendering: highlighted keywords (e.g., "Travel", "Trips", "Journey") appear in Garibook yellow (#FEC200) as they're typed
-- Configurable typing speed (80ms), deletion speed (40ms), and pause duration (2s)
+To run this project locally on your machine:
 
-### 📊 Scroll-Triggered Stats Counter
-- GSAP `ScrollTrigger` detects when the counter section enters the viewport
-- Numbers animate from 0 → target (300,000+ / 850,000+ / 35,000+ / 64) over 2 seconds
-- Locale-formatted numbers with smooth easing
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Atahar-Shihab/garibook.git
+   cd garibook
+   ```
 
-### 🎞️ Section Reveal Animations
-- `gsap.from()` with `ScrollTrigger` progressively reveals sections as the user scrolls
-- Staggered card animations in Services, Freedom, and People Together sections
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-### 📱 Interactive Features
-- **Booking Widget**: Functional tab switching between Car Rental and Airport Rental, custom car selector dropdown with vehicle images, radio button trip-type selection
-- **Sliders**: Horizontal scroll-snap sliders with prev/next navigation for Newsroom and Passenger Reviews
-- **Video Modal**: Click-to-play YouTube video overlay with backdrop blur
-- **Mobile Navigation**: Animated off-canvas drawer with smooth slide-in transition
+3. **Start the local development server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
+
+5. **Preview production build locally:**
+   ```bash
+   npm run preview
+   ```
 
 ---
 
-## 📱 Responsive Breakpoints
+## 👨‍💻 Developer Information
 
-| Viewport | Width | Layout |
-|---|---|---|
-| Mobile | < 640px | Single column, stacked sections |
-| Tablet | 640–1023px | 2-column grids |
-| Desktop | 1024px+ | Full multi-column layouts |
-
----
-
-## 📄 License
-
-This project is created as a frontend technical demonstration. All brand assets belong to Garibook.
+- **Developer:** Atahar Shihab
+- **Email:** [shihabatahar@gmail.com](mailto:shihabatahar@gmail.com)
+- **GitHub:** [@Atahar-Shihab](https://github.com/Atahar-Shihab)
+- **Live Deployment:** [https://garibook.vercel.app/](https://garibook.vercel.app/)

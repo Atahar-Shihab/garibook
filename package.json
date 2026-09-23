@@ -3,7 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Garibook homepage recreation – Modern Responsive React & Tailwind Application",
+  "description": "Educational frontend recreation of the Garibook homepage for technical assessment – React 18, Vite & Tailwind CSS",
+  "author": "Atahar Shihab <shihabatahar@gmail.com>",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

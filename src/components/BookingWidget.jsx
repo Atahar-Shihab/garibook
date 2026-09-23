@@ -7,6 +7,7 @@ const BookingWidget = () => {
   const [airportTripType, setAirportTripType] = useState('From Airport'); // 'From Airport' | 'From Home'
   const [selectedCar, setSelectedCar] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [hours, setHours] = useState(3);
   
   const dropdownRef = useRef(null);
 
@@ -25,16 +26,24 @@ const BookingWidget = () => {
     setIsDropdownOpen(false);
   };
 
+  const decreaseHours = () => {
+    if (hours > 2) setHours(hours - 1);
+  };
+
+  const increaseHours = () => {
+    if (hours < 12) setHours(hours + 1);
+  };
+
   return (
-    <div className="relative z-20 -mt-24 lg:-mt-28 max-w-7xl mx-auto px-4">
-      {/* ── Top Tabs ── */}
-      <div className="flex gap-2">
+    <div className="relative z-20 -mt-20 lg:-mt-24 max-w-7xl mx-auto px-4">
+      {/* ── Top Tabs (Flush with Card) ── */}
+      <div className="flex gap-1.5">
         <button
           onClick={() => setActiveTab('car')}
-          className={`flex items-center gap-2.5 px-7 py-3.5 rounded-t-2xl font-bold text-base transition-all ${
+          className={`flex items-center gap-2.5 px-8 py-3.5 rounded-t-xl font-bold text-base transition-all ${
             activeTab === 'car'
-              ? 'bg-[#121212] text-white shadow-md'
-              : 'bg-white/80 hover:bg-white text-[#121212]'
+              ? 'bg-[#121212] text-white shadow-sm'
+              : 'bg-white hover:bg-gray-50 text-[#121212]'
           }`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -46,10 +55,10 @@ const BookingWidget = () => {
 
         <button
           onClick={() => setActiveTab('airport')}
-          className={`flex items-center gap-2.5 px-7 py-3.5 rounded-t-2xl font-bold text-base transition-all ${
+          className={`flex items-center gap-2.5 px-8 py-3.5 rounded-t-xl font-bold text-base transition-all ${
             activeTab === 'airport'
-              ? 'bg-[#121212] text-white shadow-md'
-              : 'bg-white/80 hover:bg-white text-[#121212]'
+              ? 'bg-[#121212] text-white shadow-sm'
+              : 'bg-white hover:bg-gray-50 text-[#121212]'
           }`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,7 +69,7 @@ const BookingWidget = () => {
       </div>
 
       {/* ── Main Form Card ── */}
-      <div className="bg-white rounded-b-2xl rounded-tr-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-gray-100 p-6 lg:p-8">
+      <div className="bg-white rounded-b-2xl rounded-tr-2xl shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-gray-100 p-6 lg:p-8">
         {activeTab === 'car' ? (
           /* Car Rental Form */
           <div>
@@ -74,7 +83,7 @@ const BookingWidget = () => {
                 
                 <div
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center justify-between border border-gray-200 rounded-xl px-4 py-3 cursor-pointer hover:border-gray-400 transition bg-white"
+                  className="flex items-center justify-between border border-gray-200 rounded-xl px-4 py-3 cursor-pointer hover:border-gray-400 transition bg-white h-[48px]"
                 >
                   {selectedCar ? (
                     <div className="flex items-center gap-3 overflow-hidden">
@@ -113,10 +122,10 @@ const BookingWidget = () => {
               {/* Field 2: Pickup Location */}
               <div>
                 <label className="flex items-center gap-2 text-sm lg:text-[15px] font-semibold text-[#121212] mb-2">
-                  <img src="/assets/icon/Frame76.svg" alt="" className="w-4 h-4 object-contain" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#fdd300] inline-block"></span>
                   <span>Pickup Location <span className="text-red-500">*</span></span>
                 </label>
-                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition">
+                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition h-[48px] flex items-center">
                   <input
                     type="text"
                     placeholder="Enter Pickup Location"
@@ -125,28 +134,30 @@ const BookingWidget = () => {
                 </div>
               </div>
 
-              {/* Field 3: Drop-off Location */}
-              <div>
-                <label className="flex items-center gap-2 text-sm lg:text-[15px] font-semibold text-[#121212] mb-2">
-                  <img src="/assets/icon/fi_14910621.svg" alt="" className="w-4 h-4 object-contain" />
-                  <span>Drop-off Location <span className="text-red-500">*</span></span>
-                </label>
-                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition">
-                  <input
-                    type="text"
-                    placeholder="Enter Drop-off Location"
-                    className="w-full text-sm font-medium text-gray-800 placeholder-gray-400 outline-none bg-transparent"
-                  />
+              {/* Field 3: Depends on Trip Type (Drop-off Location vs Pickup Date & Time) */}
+              {tripType !== 'Hourly' ? (
+                <div>
+                  <label className="flex items-center gap-2 text-sm lg:text-[15px] font-semibold text-[#121212] mb-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#0e52ff] inline-block"></span>
+                    <span>Drop-off Location <span className="text-red-500">*</span></span>
+                  </label>
+                  <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition h-[48px] flex items-center">
+                    <input
+                      type="text"
+                      placeholder="Enter Drop-off Location"
+                      className="w-full text-sm font-medium text-gray-800 placeholder-gray-400 outline-none bg-transparent"
+                    />
+                  </div>
                 </div>
-              </div>
+              ) : null}
 
-              {/* Field 4: Pickup Date & Time */}
+              {/* Pickup Date & Time */}
               <div>
                 <label className="flex items-center gap-2 text-sm lg:text-[15px] font-semibold text-[#121212] mb-2">
                   <img src="/assets/icon/fi_12516022.svg" alt="" className="w-4 h-4 object-contain" />
                   <span>Pickup Date & Time <span className="text-red-500">*</span></span>
                 </label>
-                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition">
+                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition h-[48px] flex items-center">
                   <input
                     type="text"
                     placeholder="MM/DD/YYYY 00:00 PM"
@@ -154,6 +165,38 @@ const BookingWidget = () => {
                   />
                 </div>
               </div>
+
+              {/* If Hourly: Field 4 is Select Hours with stepper */}
+              {tripType === 'Hourly' && (
+                <div>
+                  <label className="flex items-center gap-2 text-sm lg:text-[15px] font-semibold text-[#121212] mb-2">
+                    <img src="/assets/icon/clock1.png" alt="" className="w-4 h-4 object-contain" />
+                    <span>Select Hours <span className="text-red-500">*</span></span>
+                  </label>
+                  <div className="border border-gray-200 rounded-xl px-2 py-1.5 flex items-center justify-between h-[48px]">
+                    <button
+                      type="button"
+                      onClick={decreaseHours}
+                      className="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold flex items-center justify-center transition"
+                    >
+                      -
+                    </button>
+                    <span className="text-sm font-semibold text-gray-800">
+                      {hours} hours
+                    </span>
+                    <button
+                      type="button"
+                      onClick={increaseHours}
+                      className="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold flex items-center justify-center transition"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-red-500 mt-1.5 font-medium">
+                    Minimum 2 hours is required for an hourly trip.
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Dynamic Return Date & Time field if Round Way is selected */}
@@ -163,7 +206,7 @@ const BookingWidget = () => {
                   <img src="/assets/icon/fi_12516022.svg" alt="" className="w-4 h-4 object-contain" />
                   <span>Return Date & Time <span className="text-red-500">*</span></span>
                 </label>
-                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition">
+                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition h-[48px] flex items-center">
                   <input
                     type="text"
                     placeholder="MM/DD/YYYY 00:00 PM"
@@ -175,19 +218,25 @@ const BookingWidget = () => {
 
             {/* Trip Type Radios & Continue Button */}
             <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pt-2">
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-3">
                 {['One Way', 'Round Way', 'Hourly'].map((type) => (
-                  <label key={type} className="flex items-center gap-2.5 cursor-pointer select-none">
-                    <input
-                      type="radio"
-                      name="tripType"
-                      value={type}
-                      checked={tripType === type}
-                      onChange={() => setTripType(type)}
-                      className="w-4 h-4 text-[#0e52ff] focus:ring-[#0e52ff] accent-[#0e52ff]"
-                    />
-                    <span className="text-sm lg:text-[15px] font-semibold text-gray-800">{type}</span>
-                  </label>
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setTripType(type)}
+                    className={`flex items-center gap-2.5 px-4 py-2 rounded-lg cursor-pointer transition select-none ${
+                      tripType === type
+                        ? 'bg-blue-50/60 text-[#0e52ff]'
+                        : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                      tripType === type ? 'border-[#0e52ff]' : 'border-gray-300'
+                    }`}>
+                      {tripType === type && <div className="w-2 h-2 rounded-full bg-[#0e52ff]" />}
+                    </div>
+                    <span className="text-sm font-semibold">{type}</span>
+                  </button>
                 ))}
               </div>
 
@@ -212,7 +261,7 @@ const BookingWidget = () => {
                 
                 <div
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center justify-between border border-gray-200 rounded-xl px-4 py-3 cursor-pointer hover:border-gray-400 transition bg-white"
+                  className="flex items-center justify-between border border-gray-200 rounded-xl px-4 py-3 cursor-pointer hover:border-gray-400 transition bg-white h-[48px]"
                 >
                   {selectedCar ? (
                     <div className="flex items-center gap-3 overflow-hidden">
@@ -251,10 +300,10 @@ const BookingWidget = () => {
               {/* Field 2: Pickup Airport */}
               <div>
                 <label className="flex items-center gap-2 text-sm lg:text-[15px] font-semibold text-[#121212] mb-2">
-                  <img src="/assets/icon/Frame76.svg" alt="" className="w-4 h-4 object-contain" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#fdd300] inline-block"></span>
                   <span>Pickup Airport <span className="text-red-500">*</span></span>
                 </label>
-                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition">
+                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition h-[48px] flex items-center">
                   <select className="w-full text-sm font-medium text-gray-800 outline-none bg-transparent cursor-pointer">
                     <option value="">Select Airport</option>
                     {airportsData.map((a, i) => (
@@ -267,10 +316,10 @@ const BookingWidget = () => {
               {/* Field 3: Drop-off Location */}
               <div>
                 <label className="flex items-center gap-2 text-sm lg:text-[15px] font-semibold text-[#121212] mb-2">
-                  <img src="/assets/icon/fi_14910621.svg" alt="" className="w-4 h-4 object-contain" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#0e52ff] inline-block"></span>
                   <span>Drop-off Location <span className="text-red-500">*</span></span>
                 </label>
-                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition">
+                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition h-[48px] flex items-center">
                   <input
                     type="text"
                     placeholder="Enter Drop-off Location"
@@ -285,7 +334,7 @@ const BookingWidget = () => {
                   <img src="/assets/icon/fi_12516022.svg" alt="" className="w-4 h-4 object-contain" />
                   <span>Pickup Date & Time <span className="text-red-500">*</span></span>
                 </label>
-                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition">
+                <div className="border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#0e52ff] transition h-[48px] flex items-center">
                   <input
                     type="text"
                     placeholder="MM/DD/YYYY 00:00 PM"
@@ -297,19 +346,25 @@ const BookingWidget = () => {
 
             {/* Airport Radios & Continue Button */}
             <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pt-2">
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-3">
                 {['From Airport', 'From Home'].map((type) => (
-                  <label key={type} className="flex items-center gap-2.5 cursor-pointer select-none">
-                    <input
-                      type="radio"
-                      name="airportTripType"
-                      value={type}
-                      checked={airportTripType === type}
-                      onChange={() => setAirportTripType(type)}
-                      className="w-4 h-4 text-[#0e52ff] focus:ring-[#0e52ff] accent-[#0e52ff]"
-                    />
-                    <span className="text-sm lg:text-[15px] font-semibold text-gray-800">{type}</span>
-                  </label>
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setAirportTripType(type)}
+                    className={`flex items-center gap-2.5 px-4 py-2 rounded-lg cursor-pointer transition select-none ${
+                      airportTripType === type
+                        ? 'bg-blue-50/60 text-[#0e52ff]'
+                        : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                      airportTripType === type ? 'border-[#0e52ff]' : 'border-gray-300'
+                    }`}>
+                      {airportTripType === type && <div className="w-2 h-2 rounded-full bg-[#0e52ff]" />}
+                    </div>
+                    <span className="text-sm font-semibold">{type}</span>
+                  </button>
                 ))}
               </div>
 

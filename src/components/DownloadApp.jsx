@@ -3,20 +3,20 @@ import { APP_DOWNLOAD_LINK } from '../data/index.js';
 
 const DownloadApp = () => {
   return (
-    <section className="bg-white py-16 lg:py-24">
+    <section className="bg-white pt-24 pb-20 lg:pt-32 lg:pb-24 overflow-visible">
       <div className="max-w-7xl mx-auto px-4">
         <div 
-          className="rounded-3xl relative overflow-hidden flex flex-col md:flex-row min-h-[380px] shadow-xl"
+          className="rounded-3xl relative overflow-visible flex flex-col md:flex-row min-h-[380px] shadow-xl"
           style={{
             background: 'linear-gradient(270deg, #0e53ff, #0038c4)',
           }}
         >
           {/* Left Text Content */}
-          <div className="p-8 sm:p-12 lg:p-16 md:w-1/2 lg:w-3/5 w-full flex flex-col justify-center relative z-10">
+          <div className="p-8 sm:p-12 lg:p-16 md:w-3/5 w-full flex flex-col justify-center relative z-10">
             <h2 className="text-white text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight">
               Download <br /> Garibook Mobile App
             </h2>
-            <p className="text-white/85 mt-4 text-base sm:text-lg font-medium max-w-md">
+            <p className="text-white/90 mt-4 text-base sm:text-lg font-medium max-w-md">
               Download our Customer, Smart Driver and Enterprise App
             </p>
             
@@ -35,13 +35,13 @@ const DownloadApp = () => {
             </div>
           </div>
 
-          {/* Right Phone Mockup */}
-          <div className="absolute right-0 bottom-0 hidden md:block w-1/2 lg:w-2/5 h-full pointer-events-none">
-            <div className="relative w-full h-full flex justify-end items-end pr-8 lg:pr-14">
+          {/* Right Phone Mockup Overflowing Top and Bottom (Matching Image 4) */}
+          <div className="hidden md:block absolute right-4 lg:right-12 -top-12 lg:-top-16 bottom-0 w-2/5 pointer-events-none z-20">
+            <div className="relative w-full h-full flex justify-end items-end">
               <img 
                 src="/assets/images/app-screen/app-with-logo.png" 
                 alt="Garibook App on Mobile" 
-                className="max-w-xs lg:max-w-sm h-auto object-contain translate-y-6"
+                className="max-w-xs lg:max-w-md h-auto object-contain drop-shadow-2xl"
               />
             </div>
           </div>

@@ -12,7 +12,7 @@ const Hero = () => {
   const currentPhrase = heroTypingWords[wordIdx] || '';
 
   useEffect(() => {
-    let speed = isDeleting ? 35 : 75;
+    let speed = isDeleting ? 30 : 70;
 
     if (!isDeleting && charCount === currentPhrase.length) {
       speed = 2200; // Pause when complete phrase is shown
@@ -48,14 +48,14 @@ const Hero = () => {
   const visibleText = currentPhrase.substring(0, charCount);
 
   return (
-    <section ref={heroRef} className="w-full bg-white pt-12 pb-36 lg:pt-16 lg:pb-48">
+    <section ref={heroRef} className="w-full bg-white pt-10 pb-32 lg:pt-14 lg:pb-44">
       <div className="max-w-7xl mx-auto px-4" ref={contentRef}>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Dynamic Headline */}
           <div className="lg:col-span-6">
-            <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold text-[#121212] tracking-tight leading-[1.15] min-h-[140px] lg:min-h-[160px]">
+            <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-extrabold text-[#121212] tracking-tight leading-[1.12] min-h-[140px] lg:min-h-[160px]">
               <span>{visibleText}</span>
-              <span className="inline-block w-1 h-[1em] bg-black ml-1.5 align-middle animate-pulse"></span>
+              <span className="inline-block w-1.5 h-[0.9em] bg-[#0e52ff] ml-1.5 align-middle animate-pulse"></span>
             </h1>
           </div>
 
@@ -70,10 +70,10 @@ const Hero = () => {
                 href={APP_DOWNLOAD_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 bg-[#fdd300] hover:bg-[#e6c003] text-[#121212] font-bold text-base sm:text-lg px-8 py-4 rounded-2xl transition-all duration-300 hover:scale-[1.02] shadow-sm hover:shadow"
+                className="inline-flex items-center gap-3 bg-[#fdd300] hover:bg-[#e6c003] text-[#121212] font-bold text-base sm:text-lg px-8 py-4 rounded-xl transition-all duration-300 hover:scale-[1.02] shadow-sm hover:shadow"
               >
                 <span>Download App</span>
-                <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </a>

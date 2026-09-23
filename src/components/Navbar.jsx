@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { navLinks } from '../data/index.js';
 
 const Navbar = () => {
@@ -7,21 +7,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* ── Top Bar / Language Selector (matches video top right) ── */}
-      <div className="bg-white border-b border-gray-100 hidden md:block">
-        <div className="max-w-7xl mx-auto px-4 py-1.5 flex justify-end items-center gap-2 text-xs font-semibold text-gray-700">
-          <button 
-            onClick={() => setLanguage(language === 'English' ? 'বাংলা' : 'English')}
-            className="flex items-center gap-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-1 rounded-full transition"
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-            </svg>
-            <span>{language}</span>
-          </button>
-        </div>
-      </div>
-
       {/* ── Main Sticky Navbar ── */}
       <header className="sticky top-0 w-full z-50 bg-white shadow-sm border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 py-3.5 flex justify-between items-center">
@@ -47,11 +32,21 @@ const Navbar = () => {
             ))}
           </nav>
 
-          {/* Right Action: Login Button */}
-          <div className="hidden lg:flex items-center gap-4">
+          {/* Right Action: Language Button + Login Button (matching live site) */}
+          <div className="hidden lg:flex items-center gap-3">
+            <button 
+              onClick={() => setLanguage(language === 'English' ? 'বাংলা' : 'English')}
+              className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-semibold text-sm px-4 py-2 rounded-xl flex items-center gap-2 transition-all shadow-sm"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{language}</span>
+            </button>
+
             <a
               href="/login"
-              className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-semibold text-sm px-7 py-2.5 rounded-xl transition-all shadow-sm hover:shadow"
+              className="bg-[#0e52ff] hover:bg-[#0038c4] text-white font-semibold text-sm px-6 py-2 rounded-xl transition-all shadow-sm"
             >
               login
             </a>
@@ -108,10 +103,17 @@ const Navbar = () => {
               </a>
             ))}
             
-            <div className="pt-4 border-t border-gray-100">
+            <div className="pt-4 border-t border-gray-100 flex flex-col gap-3">
+              <button 
+                onClick={() => setLanguage(language === 'English' ? 'বাংলা' : 'English')}
+                className="w-full bg-[#0e52ff] text-white font-semibold rounded-xl py-2.5 flex items-center justify-center gap-2"
+              >
+                <span>{language}</span>
+              </button>
+
               <a
                 href="/login"
-                className="block text-center bg-[#0e52ff] text-white font-semibold rounded-xl py-3 shadow"
+                className="block text-center bg-[#0e52ff] text-white font-semibold rounded-xl py-2.5 shadow"
                 onClick={() => setDrawerOpen(false)}
               >
                 login

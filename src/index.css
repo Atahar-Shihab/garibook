@@ -34,6 +34,64 @@ body {
   }
 }
 
+/* ─── Service Card Interactive Animation (Matches Garibook live site) ─── */
+.box-item-wrap-one {
+  background: #f5f8ff;
+  padding: 36px;
+  min-height: 350px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.box-item-wrap-one.active,
+.box-item-wrap-one:hover {
+  background: #0e52ff !important;
+}
+
+.box-item-wrap-one.active h5,
+.box-item-wrap-one.active p,
+.box-item-wrap-one:hover h5,
+.box-item-wrap-one:hover p {
+  color: #ffffff !important;
+}
+
+.box-iwo-img {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 24px;
+}
+
+.box-iwo-img::after {
+  position: absolute;
+  content: "";
+  height: 86px;
+  background: #ffffff;
+  left: -36px;
+  top: -12px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  z-index: -1;
+  transition: all 0.4s ease;
+  width: 0;
+}
+
+.box-item-wrap-one.active .box-iwo-img::after,
+.box-item-wrap-one:hover .box-iwo-img::after {
+  width: 130px;
+}
+
+.box-item-wrap-one.active .box-iwo-img img,
+.box-item-wrap-one:hover .box-iwo-img img {
+  transform: translateX(18px);
+  transition: transform 0.4s ease;
+}
+
 /* ─── Scrollbar Hide (for sliders) ─── */
 .scrollbar-hide {
   -ms-overflow-style: none;

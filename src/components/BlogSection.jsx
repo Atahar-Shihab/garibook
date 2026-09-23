@@ -30,8 +30,9 @@ const BlogSection = () => {
         {/* 3 Blog Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {blogsData.map((blog) => (
-            <div
+            <a
               key={blog.id}
+              href={blog.url}
               className="group rounded-2xl overflow-hidden border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer"
             >
               {/* Blog Image */}
@@ -57,7 +58,7 @@ const BlogSection = () => {
                   {blog.category}
                 </p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>

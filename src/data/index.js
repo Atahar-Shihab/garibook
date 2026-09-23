@@ -2,10 +2,10 @@
 export const carsData = [
   { id: 1, name: 'Sedan Premium', seat: '4 Seats', image: '/admin/assets/images/car_configuration/1car_configuration1790064590387752.png' },
   { id: 2, name: 'Sedan', seat: '4 Seats', image: '/admin/assets/images/car_configuration/1car_configuration1790064556396506.png' },
-  { id: 3, name: 'Noah', seat: '7 Seats', image: '/admin/assets/images/car_configuration/1car_configuration1790064572461478.png' },
-  { id: 4, name: 'HiAce', seat: '11 Seats', image: '/admin/assets/images/car_configuration/1car_configuration1790064605397506.png' },
-  { id: 5, name: 'Sedan Economy', seat: '4 Seats', image: '/admin/assets/images/car_configuration/1car_configuration1790064616393966.png' },
-  { id: 6, name: 'Chander Gari', seat: '4 Seats', image: '/admin/assets/images/car_configuration/1car_configuration1790064638405414.png' },
+  { id: 3, name: 'Noah', seat: '7 Seats', image: '/admin/assets/images/car_configuration/1car_configuration1790064571661334.png' },
+  { id: 5, name: 'HiAce', seat: '11 Seats', image: '/admin/assets/images/car_configuration/1car_configuration1790064527400306.png' },
+  { id: 7, name: 'Sedan Economy', seat: '4 Seats', image: '/admin/assets/images/car_configuration/probox.png' },
+  { id: 11, name: 'Chander Gari', seat: '8 Seats', image: '/admin/assets/images/car_configuration/chander_gari.png' },
 ];
 
 /* ─── Data: Airports ─── */
@@ -74,7 +74,7 @@ export const passengerReviews = [
 export const newsroomData = [
   { 
     id: 1, 
-    date: 'December 05, 2026',
+    date: 'December 05, 2024',
     title: 'গাড়িবুক: বাংলাদেশের ইন্টারসিটি ভ্রমণে স্বাধীনতার নতুন পথচলা', 
     url: 'https://www.prothomalo.com/bangladesh/9657q54847', 
     brandImage: '/admin/assets/images/newsrooms/241205180904_ZjsiRmDtff.png', 
@@ -82,17 +82,17 @@ export const newsroomData = [
   },
   { 
     id: 2, 
-    date: 'December 04, 2026',
+    date: 'December 04, 2024',
     title: 'Digital App to offer "Chander Gari"', 
-    url: 'https://www.dhakatribune.com/business/365516/digital-app-garibook-to-offer-chander-gari', 
+    url: 'https://epaper.dhakatribune.com/epaper/details/115797', 
     brandImage: '/admin/assets/images/newsrooms/67503526ae3fb.png', 
     image: '/admin/assets/images/newsrooms/67516d3a81863.jpeg' 
   },
   { 
     id: 3, 
-    date: 'December 04, 2026',
+    date: 'December 04, 2024',
     title: 'বাণিজ্যমেলায় গ্রাহকদের জন্য ‘চান্দের গাড়ি’ সার্ভিসের আয়োজন', 
-    url: 'https://www.kalerkantho.com/online/business/2024/12/04/1454124', 
+    url: 'https://www.kalerkantho.com/online/corporatecorner/2024/11/18/1448094', 
     brandImage: '/admin/assets/images/newsrooms/241204165747_uTQ3MXgeA9.png', 
     image: '/admin/assets/images/newsrooms/241204165747_E5W7U2wzVE.jpeg' 
   },
@@ -104,23 +104,23 @@ export const blogsData = [
     id: 16,
     date: 'September 15, 2026',
     title: 'রাইড শেয়ারিংয়ে বদলে যাচ্ছে বাংলাদেশের শহুরে পরিবহন ব্যবস্থা',
-    category: 'ইন্টারসিটি জার্নির সুবিধা',
+    category: 'Lifestyle',
     image: '/admin/assets/images/blogs/6aabc714e2a79.webp',
     url: '/blogs/16'
   },
   {
     id: 17,
-    date: 'September 15, 2026',
+    date: 'September 20, 2026',
     title: 'সিলেটের দর্শনীয় স্থান সমূহ, খাবার ও থাকার ব্যবস্থা',
-    category: 'ইন্টারসিটি জার্নির সুবিধা',
+    category: 'Destinations',
     image: '/admin/assets/images/blogs/260920175045_g3UDrxr4bz.webp',
     url: '/blogs/17'
   },
   {
     id: 18,
-    date: 'September 15, 2026',
+    date: 'September 20, 2026',
     title: 'নওগাঁর দর্শনীয় স্থান সমূহ, খাবার ও থাকার ব্যবস্থা',
-    category: 'ইন্টারসিটি জার্নির সুবিধা',
+    category: 'Informative',
     image: '/admin/assets/images/blogs/260920175752_kbpbDIIOGX.webp',
     url: '/blogs/18'
   }

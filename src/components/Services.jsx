@@ -1,52 +1,31 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useState } from 'react';
 import { rideServices } from '../data/index.js';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const Services = () => {
   const [activeServiceTab, setActiveServiceTab] = useState('Rides');
-  const sectionRef = useRef(null);
-
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.from('.service-card', {
-        y: 30,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 0.6,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-        }
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, [activeServiceTab]);
+  const [activeCardIndex, setActiveCardIndex] = useState(1); // Default to Ride share matching screenshot
 
   const tabs = ['Rides', 'Garibook Business', 'Garibook Club', 'VMS'];
 
   return (
-    <section ref={sectionRef} className="bg-white py-16 lg:py-24">
+    <section className="bg-white py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4">
         {/* Section Heading */}
-        <div className="text-center mb-10">
+        <div className="mb-10">
           <h2 className="text-3xl md:text-5xl font-extrabold text-[#121212]">
             Our Services
           </h2>
           
-          {/* Tab Filter Pills */}
-          <div className="flex flex-wrap justify-center gap-3 mt-8">
+          {/* Tab Filter Buttons (Rounded Rectangles matching Image 5) */}
+          <div className="flex flex-wrap gap-3 mt-6">
             {tabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveServiceTab(tab)}
-                className={`px-8 py-3 rounded-full font-bold text-sm md:text-base transition-all ${
+                className={`px-7 py-3 rounded-xl font-bold text-sm md:text-base transition-all ${
                   activeServiceTab === tab
-                    ? 'bg-[#121212] text-white shadow-md'
-                    : 'bg-[#f3f4f6] text-[#4b5563] hover:bg-gray-200'
+                    ? 'bg-[#0e52ff] text-white shadow-md'
+                    : 'bg-[#eaedf2] text-[#121212] hover:bg-gray-200'
                 }`}
               >
                 {tab}
@@ -58,29 +37,35 @@ const Services = () => {
         {/* Tab 1: Rides */}
         {activeServiceTab === 'Rides' && (
           <div className="mt-12">
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#121212] mb-10">
-              Every Ride <br className="hidden sm:inline" /> One Platform
+            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121212] mb-12 leading-tight">
+              Every Ride <br /> One Platform
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {rideServices.map((service, index) => (
-                <div
-                  key={index}
-                  className={`service-card bg-white rounded-2xl p-6 border transition-all duration-300 hover:shadow-xl ${
-                    index === 0 ? 'border-l-4 border-l-[#fdd300] border-gray-100 shadow-sm' : 'border-gray-100 shadow-sm'
-                  }`}
-                >
-                  <div className="h-16 flex items-center">
-                    <img src={service.icon} alt={service.title} className="h-12 w-auto object-contain" />
+              {rideServices.map((service, index) => {
+                const isActive = activeCardIndex === index;
+                return (
+                  <div
+                    key={index}
+                    onClick={() => setActiveCardIndex(index)}
+                    onMouseEnter={() => setActiveCardIndex(index)}
+                    className={`box-item-wrap-one ${isActive ? 'active' : ''}`}
+                  >
+                    <div className="box-iwo-img">
+                      <img src={service.icon} alt={service.title} className="h-16 w-auto object-contain" />
+                    </div>
+                    
+                    <div className="box-iwo-text mt-2">
+                      <h5 className="text-xl lg:text-2xl font-bold text-[#121212] mb-3">
+                        {service.title}
+                      </h5>
+                      <p className="text-gray-500 text-sm lg:text-base leading-relaxed">
+                        {service.desc}
+                      </p>
+                    </div>
                   </div>
-                  <h4 className="text-lg font-bold text-[#121212] mt-6">
-                    {service.title}
-                  </h4>
-                  <p className="text-gray-500 text-sm leading-relaxed mt-2.5">
-                    {service.desc}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

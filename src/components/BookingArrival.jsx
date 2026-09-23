@@ -13,7 +13,9 @@ const BookingArrival = () => {
       gsap.from('.ba-image', {
         y: 30,
         opacity: 0,
-        stagger: 0.15,
+        stagger: 0.12,
+        duration: 0.6,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 80%',
@@ -24,44 +26,45 @@ const BookingArrival = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-black py-16 lg:py-20">
+    <section ref={sectionRef} className="bg-black py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-          <h2 className="text-white text-3xl md:text-4xl font-bold max-w-lg">
-            From Booking to Arrival — It's All in Your Hands
+        {/* Header row */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+          <h2 className="text-white text-3xl sm:text-4xl lg:text-5xl font-extrabold max-w-xl leading-tight">
+            From Booking to Arrival It’s All in Your Hands
           </h2>
           <a 
             href={APP_DOWNLOAD_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#0f2647] text-white rounded-lg px-6 py-3 font-semibold hover:bg-opacity-90 transition"
+            className="inline-flex items-center gap-3 bg-[#0e52ff] hover:bg-[#0038c4] text-white font-bold text-base px-8 py-3.5 rounded-xl transition shadow"
           >
-            Download App
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            <span>Download App</span>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </a>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="ba-image sm:col-span-2 rounded-xl overflow-hidden h-64">
-              <img src="/assets/images/banner/explore.jpeg" alt="Explore" className="object-cover w-full h-full" />
-            </div>
-            <div className="ba-image sm:col-span-1 rounded-xl overflow-hidden h-64">
-              <img src="/assets/images/banner/freedom.jpg" alt="Freedom" className="object-cover w-full h-full" />
-            </div>
+        {/* 5-Card Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
+          {/* Top Row: explore.jpeg (7 cols) + freedom.jpg (5 cols) */}
+          <div className="ba-image md:col-span-7 rounded-2xl overflow-hidden h-72 lg:h-80 shadow-lg bg-gray-900">
+            <img src="/assets/images/services/explore.jpeg" alt="Explore Ride Services" className="object-cover w-full h-full hover:scale-105 transition-transform duration-500" />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="ba-image rounded-xl overflow-hidden h-48">
-              <img src="/assets/images/banner/safe_travel.svg" alt="Safe Travel" className="object-cover w-full h-full" />
-            </div>
-            <div className="ba-image rounded-xl overflow-hidden h-48">
-              <img src="/assets/images/banner/prefarred_car.jpg" alt="Preferred Car" className="object-cover w-full h-full" />
-            </div>
-            <div className="ba-image rounded-xl overflow-hidden h-48">
-              <img src="/assets/images/banner/smooth.jpg" alt="Smooth Journey" className="object-cover w-full h-full" />
-            </div>
+          <div className="ba-image md:col-span-5 rounded-2xl overflow-hidden h-72 lg:h-80 shadow-lg bg-gray-900">
+            <img src="/assets/images/services/freedom.jpg" alt="Freedom" className="object-cover w-full h-full hover:scale-105 transition-transform duration-500" />
+          </div>
+
+          {/* Bottom Row: safe_travel (4 cols) + prefarred_car (4 cols) + smooth (4 cols) */}
+          <div className="ba-image md:col-span-4 rounded-2xl overflow-hidden h-64 lg:h-72 shadow-lg bg-gray-900">
+            <img src="/assets/images/services/safe_travel.svg" alt="Safe Travel" className="object-cover w-full h-full hover:scale-105 transition-transform duration-500" />
+          </div>
+          <div className="ba-image md:col-span-4 rounded-2xl overflow-hidden h-64 lg:h-72 shadow-lg bg-gray-900">
+            <img src="/assets/images/services/prefarred_car.jpg" alt="Choose Preferred Car" className="object-cover w-full h-full hover:scale-105 transition-transform duration-500" />
+          </div>
+          <div className="ba-image md:col-span-4 rounded-2xl overflow-hidden h-64 lg:h-72 shadow-lg bg-gray-900">
+            <img src="/assets/images/services/smooth.jpg" alt="Smooth Experience" className="object-cover w-full h-full hover:scale-105 transition-transform duration-500" />
           </div>
         </div>
       </div>

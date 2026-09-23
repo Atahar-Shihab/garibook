@@ -26,10 +26,27 @@ export const statsData = [
 
 /* ─── Data: Ride Services ─── */
 export const rideServices = [
-  { title: 'Intercity Car Rental', desc: 'Travel between cities with comfort and confidence.', icon: '/assets/images/cars/intercity_car_rental.svg' },
-  { title: 'Ride Share', desc: 'Go anywhere in the city, quickly and easily.', icon: '/assets/images/cars/rideshare.svg' },
-  { title: 'Airport Rental', desc: "Whether you're flying abroad or returning home, enjoy a comfortable and worry-free airport journey.", icon: '/assets/images/cars/airport_rental.svg' },
-  { title: 'Hourly Rental', desc: 'Rent a car by the hour, tailored to your needs.', icon: '/assets/images/cars/hourly_rental.svg' },
+  { 
+    title: 'Intercity Car Rental', 
+    desc: 'Travel between cities with comfort and confidence.', 
+    icon: '/assets/images/cars/intercity_car_rental.svg',
+    active: true 
+  },
+  { 
+    title: 'Ride Share', 
+    desc: 'Go anywhere in the city, quickly and easily.', 
+    icon: '/assets/images/cars/rideshare.svg' 
+  },
+  { 
+    title: 'Airport Rental', 
+    desc: "Whether you're flying abroad or returning home, enjoy a comfortable and worry-free airport journey.", 
+    icon: '/assets/images/cars/airport_rental.svg' 
+  },
+  { 
+    title: 'Hourly Rental', 
+    desc: 'Rent a car by the hour, tailored to your needs.', 
+    icon: '/assets/images/cars/hourly_rental.svg' 
+  },
 ];
 
 /* ─── Data: Freedom Features ─── */
@@ -46,34 +63,74 @@ export const peopleCards = [
   { title: 'Long Tours', image: '/assets/images/services/Group Tour_Webp.webp' },
 ];
 
-/* ─── Data: Booking Arrival Images ─── */
-export const arrivalImages = [
-  { image: '/assets/images/services/explore.jpeg', colClass: 'col-span-2' },
-  { image: '/assets/images/services/freedom.jpg', colClass: 'col-span-1' },
-  { image: '/assets/images/services/safe_travel.svg', colClass: 'col-span-1' },
-  { image: '/assets/images/services/prefarred_car.jpg', colClass: 'col-span-1' },
-  { image: '/assets/images/services/smooth.jpg', colClass: 'col-span-1' },
-];
-
 /* ─── Data: Passenger Reviews ─── */
 export const passengerReviews = [
   { id: 8, url: 'https://www.youtube.com/watch?v=JsBwaJ_VIcA', name: 'Atif Haider', occupation: 'Banker' },
   { id: 9, url: 'https://www.youtube.com/watch?v=CsxeEof1T3M', name: 'Mohammad Habibur Rahman', occupation: 'Banker' },
-  { id: 10, url: 'https://www.youtube.com/watch?v=8ma9XEGhi5s', name: 'Sadia Afrin', occupation: 'Traveller' },
+  { id: 10, url: 'https://www.youtube.com/watch?v=8ma9XEGhi5s', name: 'Sadia Afrin', occupation: 'Service Holder' },
 ];
 
 /* ─── Data: Newsroom Articles ─── */
 export const newsroomData = [
-  { id: 1, title: 'গাড়িবুক: বাংলাদেশের ইন্টারসিটি ভ্রমণে স্বাধীনতার নতুন পথচলা', url: 'https://www.prothomalo.com/bangladesh/9657q54847', brandImage: '/admin/assets/images/newsrooms/241205180904_ZjsiRmDtff.png', image: '/admin/assets/images/newsrooms/241205180904_liOX1GKSQy.webp' },
-  { id: 2, title: 'Digital app Garibook to offer "Chander Gari" service', url: 'https://www.dhakatribune.com/business/365516/digital-app-garibook-to-offer-chander-gari', brandImage: '/admin/assets/images/newsrooms/241205181003_iKZhyUvmYS.png', image: '/admin/assets/images/newsrooms/241205181003_bNIqm9b3Gw.webp' },
-  { id: 3, title: 'Garibook spreads Eid joy with Khushir Ticket', url: 'https://www.thedailystar.net/business/organisation-news/press-releases/news/garibook-spreads-eid-joy-khushir-ticket-3911946', brandImage: '/admin/assets/images/newsrooms/241205181127_t16BXswJeR.png', image: '/admin/assets/images/newsrooms/241205181127_YJ6rO5hU3m.webp' },
+  { 
+    id: 1, 
+    date: 'December 05, 2026',
+    title: 'গাড়িবুক: বাংলাদেশের ইন্টারসিটি ভ্রমণে স্বাধীনতার নতুন পথচলা', 
+    url: 'https://www.prothomalo.com/bangladesh/9657q54847', 
+    brandImage: '/admin/assets/images/newsrooms/241205180904_ZjsiRmDtff.png', 
+    image: '/admin/assets/images/newsrooms/241205180904_liOX1GKSQy.webp' 
+  },
+  { 
+    id: 2, 
+    date: 'December 04, 2026',
+    title: 'Digital App to offer "Chander Gari"', 
+    url: 'https://www.dhakatribune.com/business/365516/digital-app-garibook-to-offer-chander-gari', 
+    brandImage: '/admin/assets/images/newsrooms/67503526ae3fb.png', 
+    image: '/admin/assets/images/newsrooms/67516d3a81863.jpeg' 
+  },
+  { 
+    id: 3, 
+    date: 'December 04, 2026',
+    title: 'বাণিজ্যমেলায় গ্রাহকদের জন্য ‘চান্দের গাড়ি’ সার্ভিসের আয়োজন', 
+    url: 'https://www.kalerkantho.com/online/business/2024/12/04/1454124', 
+    brandImage: '/admin/assets/images/newsrooms/241204165747_uTQ3MXgeA9.png', 
+    image: '/admin/assets/images/newsrooms/241204165747_E5W7U2wzVE.jpeg' 
+  },
+];
+
+/* ─── Data: Blogs ─── */
+export const blogsData = [
+  {
+    id: 16,
+    date: 'September 15, 2026',
+    title: 'রাইড শেয়ারিংয়ে বদলে যাচ্ছে বাংলাদেশের শহুরে পরিবহন ব্যবস্থা',
+    category: 'ইন্টারসিটি জার্নির সুবিধা',
+    image: '/admin/assets/images/blogs/6aabc714e2a79.webp',
+    url: '/blogs/16'
+  },
+  {
+    id: 17,
+    date: 'September 15, 2026',
+    title: 'সিলেটের দর্শনীয় স্থান সমূহ, খাবার ও থাকার ব্যবস্থা',
+    category: 'ইন্টারসিটি জার্নির সুবিধা',
+    image: '/admin/assets/images/blogs/260920175045_g3UDrxr4bz.webp',
+    url: '/blogs/17'
+  },
+  {
+    id: 18,
+    date: 'September 15, 2026',
+    title: 'নওগাঁর দর্শনীয় স্থান সমূহ, খাবার ও থাকার ব্যবস্থা',
+    category: 'ইন্টারসিটি জার্নির সুবিধা',
+    image: '/admin/assets/images/blogs/260920175752_kbpbDIIOGX.webp',
+    url: '/blogs/18'
+  }
 ];
 
 /* ─── Data: Hero Typing Words ─── */
 export const heroTypingWords = [
-  'Assurance of Effortless <span>Travel</span>',
-  'Luxury <span>Trips</span> with Comfort',
-  'Your <span>Journey</span> Starts Here ...',
+  'Assurance of Effortless Travel',
+  'Luxury Trips with Comfort',
+  'Your Journey Starts Here ...',
 ];
 
 /* ─── Data: Nav Links ─── */
@@ -111,4 +168,4 @@ export const footerLinks = {
 /* ─── Constants ─── */
 export const APP_DOWNLOAD_LINK = 'https://onelink.to/gbweb?utm_source=Website&utm_medium=Webpage&utm_campaign=Homepage&utm_term=web&utm_content=page';
 export const DRIVER_APP_LINK = 'https://play.google.com/store/search?q=garibook%20smart%20driver&c=apps';
-export const BASE_IMAGE_URL = 'https://garibookadmin.com';
+export const BASE_IMAGE_URL = '';

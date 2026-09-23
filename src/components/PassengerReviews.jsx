@@ -3,9 +3,8 @@ import { passengerReviews } from '../data/index.js';
 
 const getYoutubeVideoId = (url) => {
   if (!url) return '';
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-  const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : null;
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  return match ? match[1] : null;
 };
 
 const PassengerReviews = () => {
@@ -14,7 +13,7 @@ const PassengerReviews = () => {
 
   const scroll = (direction) => {
     if (sliderRef.current) {
-      const scrollAmount = sliderRef.current.clientWidth;
+      const scrollAmount = 380;
       sliderRef.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
@@ -30,81 +29,77 @@ const PassengerReviews = () => {
   const closeVideo = () => setSelectedVideo(null);
 
   return (
-    <section className="bg-[#f8f9fa] py-16 lg:py-20">
+    <section className="bg-[#f8f9fa] py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between md:items-end gap-6">
+        {/* Header row */}
+        <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-12">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold max-w-lg text-[#0f2647]">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121212] max-w-xl">
               Our Passengers Speak For Us
             </h2>
-            <p className="text-gray-500 mt-3 max-w-2xl">
-              Our journey was seamless and enjoyable. Hear from our satisfied customers who have experienced the difference with Garibook.
+            <p className="text-gray-500 text-sm sm:text-base mt-4 max-w-2xl leading-relaxed">
+              Our journey was seamless and enjoyable from start to finish. The booking process was straightforward, and the staff were incredibly attentive, ensuring we felt comfortable throughout the trip.
             </p>
           </div>
-          <div className="flex gap-4">
+          
+          <div className="flex gap-3 shrink-0">
             <button 
               onClick={() => scroll('left')}
-              className="w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center hover:bg-gray-50 transition focus:outline-none"
-              aria-label="Previous"
+              className="w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center hover:bg-gray-100 transition active:scale-95 shadow-sm"
+              aria-label="Previous Reviews"
             >
-              <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button 
               onClick={() => scroll('right')}
-              className="w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center hover:bg-gray-50 transition focus:outline-none"
-              aria-label="Next"
+              className="w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center hover:bg-gray-100 transition active:scale-95 shadow-sm"
+              aria-label="Next Reviews"
             >
-              <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
         </div>
 
-        <div className="mt-12 overflow-hidden">
+        {/* Video Cards Slider */}
+        <div className="overflow-hidden">
           <div 
             ref={sliderRef}
-            className="flex gap-6 overflow-x-auto scroll-snap-x-mandatory scroll-smooth"
-            style={{ 
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none'
-            }}
+            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
           >
-            <style>{`
-              .scroll-snap-x-mandatory::-webkit-scrollbar {
-                display: none;
-              }
-            `}</style>
-            
-            {passengerReviews && passengerReviews.map((review, index) => {
+            {passengerReviews && passengerReviews.map((review) => {
               const videoId = getYoutubeVideoId(review.url);
-              const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '/assets/images/default-thumbnail.jpg';
+              const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
               
               return (
                 <div 
-                  key={index}
+                  key={review.id}
                   onClick={() => openVideo(review.url)}
-                  className="min-w-[300px] md:min-w-[350px] scroll-snap-start rounded-xl overflow-hidden bg-white shadow-sm cursor-pointer hover:shadow-md transition"
+                  className="w-[300px] sm:w-[360px] shrink-0 rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
                 >
-                  <div className="relative h-48 w-full group">
+                  <div className="relative h-52 w-full overflow-hidden bg-black">
                     <img 
                       src={thumbnailUrl} 
                       alt={`Review by ${review.name}`} 
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
                     />
-                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center group-hover:bg-black/40 transition">
-                      <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                    
+                    {/* Play Button Icon Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition">
+                      <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
                         <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M8 5v14l11-7z" />
                         </svg>
                       </div>
                     </div>
                   </div>
-                  <div className="p-4">
-                    <h4 className="font-semibold text-gray-900">{review.name}</h4>
-                    <p className="text-sm text-gray-500 font-medium">{review.occupation}</p>
+
+                  <div className="p-5">
+                    <h4 className="font-bold text-gray-900 text-lg">{review.name}</h4>
+                    <p className="text-sm text-gray-500 font-medium mt-1">{review.occupation}</p>
                   </div>
                 </div>
               );
@@ -113,33 +108,33 @@ const PassengerReviews = () => {
         </div>
       </div>
 
+      {/* ── YouTube Video Modal ── */}
       {selectedVideo && (
         <div 
-          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[150] bg-black/85 flex items-center justify-center p-4 backdrop-blur-sm"
           onClick={closeVideo}
         >
           <button 
             onClick={closeVideo}
-            className="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none"
-            aria-label="Close modal"
+            className="absolute top-6 right-6 text-white hover:text-gray-300 p-2 rounded-full focus:outline-none"
+            aria-label="Close video player"
           >
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
           
           <div 
-            className="w-full max-w-3xl aspect-video rounded-xl overflow-hidden shadow-2xl bg-black"
-            onClick={e => e.stopPropagation()}
+            className="w-full max-w-4xl aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black"
+            onClick={(e) => e.stopPropagation()}
           >
             <iframe 
               className="w-full h-full"
               src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1`} 
               title="YouTube video player" 
-              frameBorder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen
-            ></iframe>
+            />
           </div>
         </div>
       )}

@@ -24,24 +24,14 @@ body {
   overflow-x: hidden;
 }
 
-/* ─── Typewriter Cursor ─── */
-.typewriter-cursor {
-  display: inline-block;
-  width: 3px;
-  height: 1em;
-  background: #fec200;
-  margin-left: 4px;
-  vertical-align: text-bottom;
-  animation: blink 0.8s step-end infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
-
-/* ─── Typewriter highlighted span ─── */
-.hero-typing-text span {
-  color: #fec200;
+/* ─── Move City Skyline Animation ─── */
+@keyframes moveCity {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-25%);
+  }
 }
 
 /* ─── Scrollbar Hide (for sliders) ─── */
@@ -53,14 +43,6 @@ body {
   display: none;
 }
 
-/* ─── Scroll Snap ─── */
-.snap-x {
-  scroll-snap-type: x mandatory;
-}
-.snap-start {
-  scroll-snap-align: start;
-}
-
 /* ─── Line Clamp ─── */
 .line-clamp-2 {
   display: -webkit-box;
@@ -68,6 +50,7 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -75,156 +58,8 @@ body {
   overflow: hidden;
 }
 
-/* ─── Custom Dropdown ─── */
-.car-dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  max-height: 280px;
-  overflow-y: auto;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.75rem;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  margin-top: 4px;
-}
-
-.car-dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.car-dropdown-item:hover {
-  background: #f3f4f6;
-}
-
-/* ─── Booking Widget Elevation ─── */
-.booking-widget {
-  position: relative;
-  z-index: 20;
-  margin-top: -12rem;
-}
-
-@media (min-width: 1024px) {
-  .booking-widget {
-    margin-top: -10rem;
-  }
-}
-
-/* ─── Mobile Drawer ─── */
-.mobile-drawer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 300px;
-  max-width: 85vw;
-  background: #fff;
-  z-index: 100;
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-  box-shadow: -4px 0 20px rgba(0,0,0,0.1);
-}
-
-.mobile-drawer.open {
-  transform: translateX(0);
-}
-
-.drawer-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 99;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.drawer-overlay.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ─── Radio Button Styling ─── */
-.radio-group input[type="radio"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  border: 2px solid #d1d5db;
-  border-radius: 50%;
-  outline: none;
-  cursor: pointer;
-  position: relative;
-  transition: border-color 0.2s;
-}
-
-.radio-group input[type="radio"]:checked {
-  border-color: #0f2647;
-}
-
-.radio-group input[type="radio"]:checked::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 8px;
-  height: 8px;
-  background: #0f2647;
-  border-radius: 50%;
-}
-
-/* ─── SSL Banner ─── */
-.ssl-banner {
-  overflow-x: auto;
-  white-space: nowrap;
-}
-
-/* ─── Video Modal ─── */
-.video-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.85);
-  animation: fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 /* ─── Smooth Image Loading ─── */
 img {
   max-width: 100%;
   height: auto;
-}
-
-/* ─── Button Arrow Animation ─── */
-.btn-arrow svg {
-  transition: transform 0.2s ease;
-}
-.btn-arrow:hover svg {
-  transform: translateX(4px);
-}
-
-/* ─── Service Card Active Border ─── */
-.service-card-active {
-  border-left: 4px solid #fec200;
-}
-
-/* ─── Section Reveal (initial state for GSAP) ─── */
-.gsap-reveal {
-  opacity: 0;
-  transform: translateY(30px);
 }
